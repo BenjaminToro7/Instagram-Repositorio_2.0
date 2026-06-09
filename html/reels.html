@@ -3,45 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reels</title>
+    <title>Reels - Imitación IG</title>
     <link rel="stylesheet" href="css/reels.css">
 </head>
 <body>
     <main>
         <section id="reels-section">
-            <!-- Los reels se cargarán aquí dinámicamente desde la API -->
             <div id="reels-container">
-                <p>Cargando reels...</p>
+                <span id="reel-loader">Cargando reels...</span>
             </div>
         </section>
     </main>
-
     <script src="js/reels.js"></script>
-    <script>
-        // Suponiendo que 'obtenerReels' en reels.js obtiene los datos de la API y los procesa
-        // Adaptamos aquí para renderizar los reels dinámicamente
-        async function mostrarReels() {
-            try {
-                // Esta función debe devolver un array de objetos de reels que contenga, por ejemplo, la url del video y otros datos.
-                const response = await fetch('/js/reels.js'); // Solo para forzar la carga del archivo si no está cargado, no hace falta si ya está con <script>
-                // Llamar a la función definida en reels.js
-                if (typeof obtenerReels === 'function') {
-                    // Suponiendo que reels.js imprime los datos y también los puede retornar
-                    // Modifica obtenerReels para que retorne los datos si es necesario
-                    // Aquí simplemente, esperamos que inserte reels en el contenedor
-                } else {
-                    // Si obtenerReels no es global, los reels podrán cargarse automáticamente al cargar la página.
-                }
-            } catch (error) {
-                const container = document.getElementById('reels-container');
-                container.innerHTML = "<p>Error cargando los reels.</p>";
-            }
-        }
-
-        // Puedes descomentar para llamar después de asegurarte que obtenerReels inserta resultados:
-        // mostrarReels();
-
-        // Alternativamente, reels.js debería encargarse de cargar los reels dentro de #reels-container
-    </script>
 </body>
 </html>
