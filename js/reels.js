@@ -1,172 +1,314 @@
-// Simula API de reels falsos para demo. Reemplaza por tu fetch real si tienes backend.
-const DUMMY_REELS = [
-    {
-        id: 1,
-        username: "lucas_99",
-        avatar: "https://i.pravatar.cc/48?img=8",
-        video: "https://www.w3schools.com/html/mov_bbb.mp4",
-        caption: "¡Hermoso paisaje en mis vacaciones! 🌅",
-        audio: "Audio Original - lucas_99",
-        likes: 12,
-        liked: false,
-        saved: false,
-        comments: ["Hermoso!", "Wow, qué lindo lugar!"],
-    },
-    {
-        id: 2,
-        username: "marti_ig",
-        avatar: "https://i.pravatar.cc/48?img=14",
-        video: "https://www.w3schools.com/html/movie.mp4",
-        caption: "Mejores amigos, mejores recuerdos 💙",
-        audio: "Canción favorita",
-        likes: 29,
-        liked: true,
-        saved: true,
-        comments: ["Jajaja qué buena onda", "Eso sí es amistad"],
+document.addEventListener("DOMContentLoaded", function() {
+
+    // 1. Leer datos del usuario desde #userData
+    const userDiv = document.getElementById("userData");
+    function getUserData() {
+        if (!userDiv) return {};
+        const get = (key, def = "") => {
+            let v = userDiv.dataset[key];
+            if (typeof v === "undefined" || v === "") return def;
+            return v;
+        };
+        return {
+            name: get("name", "user"),
+            age: parseInt(get("age", "0"), 10) || 0,
+            bedtime: get("bedtime", "22:00"),
+            character: get("character", "Shinchan"),
+            color: get("color", "default"),
+            hobby: get("hobby", "relax"),
+            city: get("city", "your city")
+        };
     }
-];
+    const user = getUserData();
 
-// Obtén contenedor reels y quita loader
-const container = document.getElementById("reels-container");
-const loader = document.getElementById("reel-loader");
+    // 2. Función para generar tarjeta "Good Night"
+    function generateGoodNightCard(user) {
+        // Color gradientes (puedes ampliar aquí)
+        let grad = "";
+        switch ((user.color || "").toLowerCase()) {
+            case "rosa":
+            case "rose":
+            case "pink":
+                grad = "linear-gradient(120deg, #ffb6c1 0%, #8f5fe8 100%)";
+                break;
+            case "azul":
+            case "blue":
+                grad = "linear-gradient(120deg, #20386a 0%, #56d1fc 100%)";
+                break;
+            case "lila":
+            case "violet":
+            case "morado":
+            case "purple":
+                grad = "linear-gradient(120deg, #766bbf 0%, #f294ec 100%)";
+                break;
+            case "amarillo":
+            case "yellow":
+                grad = "linear-gradient(110deg, #ffe884 0%, #ffb762 100%)";
+                break;
+            case "verde":
+            case "green":
+                grad = "linear-gradient(110deg, #80d995 0%, #145c26 100%)";
+                break;
+            default:
+                grad = "linear-gradient(120deg, #0B192C 0%, #23236a 100%)";
+        }
 
-function renderReels(reels) {
-    container.innerHTML = '';
-    reels.forEach((reel, idx) => {
-        const reelDiv = document.createElement("div");
-        reelDiv.className = "reel";
-        reelDiv.style.position = "relative";
-        reelDiv.style.marginBottom = "60px";
+        // Personaje favorito → emoji/símbolo
+        const characterEmojis = {
+            "Shinchan": "🟡🧒",
+            "Himawari": "👧🌸",
+            "Masao": "👦📘",
+            "Nevado": "🐶❄️",
+            "Bo": "🧑‍🦱🎨",
+            "Nene": "👧🎀",
+            "Kazama": "🧑‍💼🟦"
+        };
+        const charKey = Object.keys(characterEmojis)
+            .find(k => k.toLowerCase() === (user.character || "").toLowerCase()) || "Shinchan";
+        const charEmoji = characterEmojis[charKey];
 
-        // Video
-        const video = document.createElement("video");
-        video.src = reel.video;
-        video.controls = true;
-        video.autoplay = idx === 0;
-        video.loop = true;
-        video.muted = true;
-        video.style.width = "100%";
-        video.style.maxHeight = "420px";
-        video.style.borderRadius = "15px";
+        // Edad: frase
+        let agePhrase = "Dream of funny adventures!";
+        if (user.age >= 12 && user.age <= 18) {
+            agePhrase = "Rest well for a great tomorrow.";
+        } else if (user.age > 18) {
+            agePhrase = "You did well today. Sleep peacefully.";
+        }
 
-        // Info inferior
-        const info = document.createElement("div");
-        info.className = "reel-info-container";
-        info.innerHTML = `
-            <div style="display:flex;align-items:center;margin-bottom:7px;">
-                <img class="reel-avatar" src="${reel.avatar}" style="width:32px;height:32px;border-radius:50%;margin-right:10px;">
-                <span class="reel-username">${reel.username}</span>
-            </div>
-            <div class="reel-caption">${reel.caption}</div>
-            <div class="reel-audio">${reel.audio}</div>
-        `;
+        // Valores por defecto elegantes (ya normalizado arriba, pero por si acaso)
+        const uName = user.name || "friend";
+        const uBedtime = user.bedtime || "22:00";
+        const uHobby = user.hobby || "relax";
+        const uCity = user.city || "your city";
 
-        // Acciones (like, save, comment, share)
-        const actions = document.createElement("div");
-        actions.className = "reel-actions";
-        actions.style.top = "10px";
-        actions.innerHTML = `
-            <button class="reel-action-btn reel-like-btn" aria-label="Like" title="Me gusta">
-                <span class="like-icon" style="font-size:1.36rem">${reel.liked ? "❤️" : "🤍"}</span>
-            </button>
-            <span class="reel-action-label reel-likes-count">${reel.likes}</span>
-            <button class="reel-action-btn reel-save-btn" aria-label="Guardar" title="Guardar">
-                <span class="save-icon" style="font-size:1.3rem">${reel.saved ? "🔖" : "📄"}</span>
-            </button>
-            <button class="reel-action-btn reel-comment-btn" aria-label="Comentar" title="Comentar">
-                💬
-            </button>
-            <button class="reel-action-btn reel-share-btn" aria-label="Compartir" title="Compartir">
-                📤
-            </button>
-        `;
+        // Crear div principal de la tarjeta
+        const card = document.createElement("div");
+        card.className = "goodnight-card";
+        card.style.width = "100%";
+        card.style.height = "100%";
+        card.style.display = "flex";
+        card.style.flexDirection = "column";
+        card.style.alignItems = "center";
+        card.style.justifyContent = "flex-end";
+        card.style.background = grad;
+        card.style.position = "relative";
+        card.style.boxSizing = "border-box";
+        card.style.padding = "0 0 32px 0";
 
-        // Comentarios abajo
-        const commentsCont = document.createElement("div");
-        commentsCont.className = "reel-comments";
-        commentsCont.style.margin = "8px 0 4px 0";
-        reel.comments.forEach(c => {
-            const comm = document.createElement("div");
-            comm.innerText = c;
-            comm.style.fontSize = "0.92rem";
-            comm.style.color = "#ffe";
-            comm.style.marginBottom = "2px";
-            commentsCont.appendChild(comm);
+        // Emoji/ilustración arriba
+        const charDiv = document.createElement("div");
+        charDiv.className = "good-night-illustration";
+        charDiv.style.marginBottom = "26px";
+        charDiv.style.textAlign = "center";
+        charDiv.style.fontSize = "72px";
+        charDiv.style.lineHeight = "1";
+        charDiv.textContent = charEmoji;
+
+        // Bocadillo Shinchan says…
+        const bubble = document.createElement("div");
+        bubble.className = "good-night-bubble";
+        bubble.style.background = "rgba(255,255,255,0.77)";
+        bubble.style.color = "#191934";
+        bubble.style.padding = "12px 28px";
+        bubble.style.borderRadius = "21px 20px 29px 25px/19px 25px 32px 21px";
+        bubble.style.fontSize = "1.05rem";
+        bubble.style.marginBottom = "18px";
+        bubble.style.maxWidth = "80%";
+        bubble.style.textAlign = "center";
+        bubble.style.boxShadow = "0 2px 14px #1a1a3a0c";
+
+        bubble.innerHTML = `<span style="font-weight:600"> ${charKey} says…</span><br>
+            Good Night, <span style="font-weight:bold">${uName}</span> ✨ <br>
+            It's <b>${uBedtime}</b>, time to rest.<br>
+            Don't forget to <b>${uHobby}</b> before sleeping.`;
+
+        // Título/frase
+        const title = document.createElement("div");
+        title.className = "good-night-title";
+        title.style.color = "#fff";
+        title.style.fontSize = "2.1rem";
+        title.style.fontWeight = "700";
+        title.style.marginBottom = "14px";
+        title.style.textAlign = "center";
+        title.style.textShadow = "0 2px 20px #0b193c80, 0 0px 7px #26262633";
+        title.style.letterSpacing = "0.01em";
+        title.innerText = agePhrase;
+
+        // Ciudad: "From [city] to dreamland"
+        const cityDiv = document.createElement("div");
+        cityDiv.style.marginTop = "9px";
+        cityDiv.style.color = "#fff";
+        cityDiv.style.fontSize = "1.02rem";
+        cityDiv.style.opacity = "0.75";
+        cityDiv.innerText = `From ${uCity} to dreamland`;
+
+        // Firma
+        const firma = document.createElement("div");
+        firma.style.marginTop = "9px";
+        firma.style.fontSize = "0.98rem";
+        firma.style.color = "#b19dff";
+        firma.style.opacity = "0.7";
+        firma.style.textAlign = "center";
+        firma.innerText = "thepawtraittites · digital art";
+
+        // Agregar todo en orden
+        card.appendChild(charDiv);
+        card.appendChild(bubble);
+        card.appendChild(title);
+        card.appendChild(cityDiv);
+        card.appendChild(firma);
+
+        return card;
+    }
+
+    // 3. Control de modal
+    const reelModal = document.querySelector(".reel-modal");
+    const modalContent = document.querySelector(".modal-content");
+    const closeBtn = document.querySelector(".modal-close-btn");
+    const reelContent = document.getElementById("reelContent");
+
+    function openReelModal() {
+        if (!reelModal || !modalContent || !reelContent) return;
+        reelModal.style.display = "flex";
+        // Eliminar contenido anterior
+        while (reelContent.firstChild) reelContent.removeChild(reelContent.firstChild);
+        // Generar tarjeta y ponerla
+        const card = generateGoodNightCard(user);
+        reelContent.appendChild(card);
+    }
+    function closeReelModal() {
+        if (!reelModal) return;
+        reelModal.style.display = "none";
+    }
+
+    if (closeBtn) {
+        closeBtn.addEventListener("click", function(ev) {
+            closeReelModal();
         });
+    }
 
-        // Caja añadir comentario
-        const commentForm = document.createElement("form");
-        commentForm.className = "reel-comment-form";
-        commentForm.innerHTML = `
-            <input type="text" class="reel-comment-input" placeholder="Agrega un comentario..." 
-                   style="paddding:4px 8px;margin-right:6px;border-radius:10px;outline:none; border:1px #888 solid;">
-            <button type="submit" class="reel-action-btn" style="font-size:1.03rem;">Enviar</button>
-        `;
-
-        // Funcionalidad interacción
-        // LIKE
-        actions.querySelector(".reel-like-btn").addEventListener("click", (e) => {
-            reel.liked = !reel.liked;
-            reel.likes += reel.liked ? 1 : -1;
-            actions.querySelector(".like-icon").innerText = reel.liked ? "❤️" : "🤍";
-            actions.querySelector(".reel-likes-count").innerText = reel.likes;
-        });
-
-        // SAVE
-        actions.querySelector(".reel-save-btn").addEventListener("click", (e) => {
-            reel.saved = !reel.saved;
-            actions.querySelector(".save-icon").innerText = reel.saved ? "🔖" : "📄";
-        });
-
-        // COMENTAR
-        actions.querySelector(".reel-comment-btn").addEventListener("click", (e) => {
-            commentForm.querySelector(".reel-comment-input").focus();
-        });
-
-        // Compartir (solo copia URL al portapapeles en demo)
-        actions.querySelector(".reel-share-btn").addEventListener("click", async (e) => {
-            await navigator.clipboard.writeText(reel.video);
-            actions.querySelector(".reel-share-btn").classList.add("shared");
-            actions.querySelector(".reel-share-btn").innerText = "✅";
-            setTimeout(() => {
-                actions.querySelector(".reel-share-btn").innerText = "📤";
-                actions.querySelector(".reel-share-btn").classList.remove("shared");
-            }, 1200);
-        });
-
-        // Enviar comentario
-        commentForm.addEventListener("submit", (ev) => {
-            ev.preventDefault();
-            const input = commentForm.querySelector(".reel-comment-input");
-            if (input.value.trim()) {
-                reel.comments.push(input.value.trim());
-                // Mostrar instantáneamente abajo
-                const comm = document.createElement("div");
-                comm.innerText = input.value.trim();
-                comm.style.fontSize = "0.92rem";
-                comm.style.color = "#ffe";
-                comm.style.marginBottom = "2px";
-                commentsCont.appendChild(comm);
-                input.value = "";
+    if (reelModal && modalContent) {
+        reelModal.addEventListener("click", function(ev){
+            if (ev.target === reelModal) {
+                closeReelModal();
             }
         });
+        // Previene cierre al click en el modal-content real
+        modalContent.addEventListener("click", function(ev) {
+            ev.stopPropagation();
+        });
+    }
 
-        reelDiv.appendChild(video);
-        reelDiv.appendChild(info);
-        reelDiv.appendChild(actions);
-        reelDiv.appendChild(commentsCont);
-        reelDiv.appendChild(commentForm);
+    // 4. Personalización del perfil
+    function personalizeProfile() {
+        // Foto: usa el emoji del personaje (o imagen local si quieres)
+        const profileImg = document.querySelector(".profile-img");
+        if (profileImg) {
+            // Usamos emoji dentro de un círculo/fondo
+            // Borrar src, reemplazar por emoji usando data-uri SVG
+            const charKey = Object.keys(user ? {
+                "Shinchan": "🟡🧒",
+                "Himawari": "👧🌸",
+                "Masao": "👦📘",
+                "Nevado": "🐶❄️",
+                "Bo": "🧑‍🦱🎨",
+                "Nene": "👧🎀",
+                "Kazama": "🧑‍💼🟦"
+            } : {}).find(k => k.toLowerCase() === (user.character || "").toLowerCase()) || "Shinchan";
+            const emoji = {
+                "Shinchan": "🟡🧒",
+                "Himawari": "👧🌸",
+                "Masao": "👦📘",
+                "Nevado": "🐶❄️",
+                "Bo": "🧑‍🦱🎨",
+                "Nene": "👧🎀",
+                "Kazama": "🧑‍💼🟦"
+            }[charKey];
 
-        container.appendChild(reelDiv);
-    });
-}
+            // Crear svg rápido con emoji
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150">
+                <rect rx="75" fill="#fff" width="150" height="150"/>
+                <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-size="73">${emoji}</text>
+            </svg>`;
+            profileImg.src = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svg)));
+            profileImg.style.background = "#eaeaea";
+        }
 
-function obtenerReels() {
-    // Simulación: reemplaza este timeout & array por tu llamada fetch real
-    loader && (loader.style.display = 'none');
-    setTimeout(() => {
-        renderReels(DUMMY_REELS);
-    }, 700);
-}
+        // Nombre usuario
+        const username = document.querySelector(".profile-username");
+        if (username) {
+            username.textContent = `@${user.name || "user"}_dreams`;
+        }
 
-obtenerReels();
+        // Bio
+        const profileBio = document.querySelector(".profile-bio");
+        if (profileBio) {
+            profileBio.textContent = `🌙 ${user.hobby || "relax"} • sleeps at ${user.bedtime || "22:00"} • from ${user.city || "your city"}`;
+        }
+    }
+    personalizeProfile();
+
+    // 5. Simular datos de reels miniatura
+    function renderFakeReels() {
+        const grid = document.querySelector(".reel-grid");
+        if (!grid) return;
+        // Borra miniaturas previas
+        grid.innerHTML = "";
+        // Genera 6 miniaturas falsas
+        for (let i=0; i<6; ++i) {
+            const thumb = document.createElement("div");
+            thumb.className = "reel-thumbnail";
+            thumb.tabIndex = 0;
+            // Pic estandard + icono play
+            const imgWrap = document.createElement("div");
+            imgWrap.className = "reel-thumb-image";
+            imgWrap.style.background = "#222";
+            imgWrap.style.width = "100%";
+            imgWrap.style.height = "100%";
+
+            // Emoji thumbs alternas
+            const em = document.createElement("span");
+            em.style.fontSize = "2.6rem";
+            em.style.display = "block";
+            em.style.textAlign = "center";
+            const emojis = ["💫", "🌃", "🌙", "🛌", "🧸", "🌌"];
+            em.textContent = emojis[i % emojis.length];
+
+            imgWrap.appendChild(em);
+
+            // Icono play
+            const playIcon = document.createElement("span");
+            playIcon.className = "reel-play-icon";
+            playIcon.innerHTML = "▶️";
+            imgWrap.appendChild(playIcon);
+
+            thumb.appendChild(imgWrap);
+
+            // Al hacer clic/cualquier thumbnail -> modal
+            thumb.addEventListener("click", function() {
+                openReelModal();
+            });
+            thumb.addEventListener("keypress", function(e) {
+                if (e.key === "Enter" || e.key === " ") openReelModal();
+            });
+
+            grid.appendChild(thumb);
+        }
+    }
+    renderFakeReels();
+
+    // 6. Eliminar comportamiento real de video (N/A, pues no se usan videos)
+
+    // 9. Botones de like/etc.: versión simulada (si aparecen, solo log)
+    // Asumiendo que si hay: poner listeners en reel-actions de la demo
+    (function setupDummyActions() {
+        function clickDummy(ev) {
+            ev.preventDefault();
+            console.log("Funcionalidad simulada");
+        }
+        document.querySelectorAll('.reel-action-btn').forEach(btn => {
+            btn.onclick = clickDummy;
+        });
+    })();
+
+}); // DOMContentLoaded fin

@@ -1,19 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reels</title>
+    <title>Perfil | Shinchan Dreams Reels</title>
     <link rel="stylesheet" href="css/reels.css">
 </head>
 <body>
+    <!-- Datos ocultos simulando usuario logueado -->
+    <div id="userData"
+         data-name="Andrea Dreams"
+         data-age="24"
+         data-bedtime="23:30"
+         data-character="shinchan"
+         data-color="#ffda6a"
+         data-hobby="Ilustración digital, coleccionar peluches"
+         data-city="Barcelona"
+         style="display: none;">
+    </div>
+
     <main>
-        <section id="reels-section">
-            <div id="reels-container">
-                <span id="reel-loader">Cargando reels...</span>
-            </div>
+        <section class="profile-page-container">
+            <!-- Encabezado perfil -->
+            <header class="profile-header">
+                <div class="profile-photo">
+                    <img src="assets/shinchan_profile.jpg" alt="Foto de Shinchan" class="profile-img">
+                </div>
+                <div class="profile-details">
+                    <div class="profile-username">@andrea_dreams</div>
+                    <div class="profile-bio">
+                        <span>🎨 Hobby: Ilustración digital, coleccionar peluches<br>
+                        🛏️ Hora de dormir: 23:30<br>
+                        📍 Ciudad: Barcelona</span>
+                    </div>
+                    <div class="profile-stats">
+                        <span><strong>7</strong> reels</span>
+                        <span><strong>1,289</strong> seguidores</span>
+                        <span><strong>296</strong> siguiendo</span>
+                    </div>
+                    <button class="btn-follow" aria-label="Seguir usuario">Seguir</button>
+                </div>
+            </header>
+
+            <!-- Cuadrícula de reels -->
+            <section class="reel-grid" aria-label="Grid de reels">
+                <div class="reel-thumbnail" data-reel-id="1" tabindex="0" onclick="openReelModal(1)" aria-label="Abrir reel 1">
+                    <div class="reel-thumb-image">
+                        <!-- Miniatura cuadrada negra/gris -->
+                        <span class="reel-play-icon">▶️</span>
+                    </div>
+                </div>
+                <div class="reel-thumbnail" data-reel-id="2" tabindex="0" onclick="openReelModal(2)" aria-label="Abrir reel 2">
+                    <div class="reel-thumb-image">
+                        <span class="reel-play-icon">▶️</span>
+                    </div>
+                </div>
+                <div class="reel-thumbnail" data-reel-id="3" tabindex="0" onclick="openReelModal(3)" aria-label="Abrir reel 3">
+                    <div class="reel-thumb-image">
+                        <span class="reel-play-icon">▶️</span>
+                    </div>
+                </div>
+                <div class="reel-thumbnail" data-reel-id="4" tabindex="0" onclick="openReelModal(4)" aria-label="Abrir reel 4">
+                    <div class="reel-thumb-image">
+                        <span class="reel-play-icon">▶️</span>
+                    </div>
+                </div>
+                <div class="reel-thumbnail" data-reel-id="5" tabindex="0" onclick="openReelModal(5)" aria-label="Abrir reel 5">
+                    <div class="reel-thumb-image">
+                        <span class="reel-play-icon">▶️</span>
+                    </div>
+                </div>
+                <div class="reel-thumbnail" data-reel-id="6" tabindex="0" onclick="openReelModal(6)" aria-label="Abrir reel 6">
+                    <div class="reel-thumb-image">
+                        <span class="reel-play-icon">▶️</span>
+                    </div>
+                </div>
+                <div class="reel-thumbnail" data-reel-id="7" tabindex="0" onclick="openReelModal(7)" aria-label="Abrir reel 7">
+                    <div class="reel-thumb-image">
+                        <span class="reel-play-icon">▶️</span>
+                    </div>
+                </div>
+                <div class="reel-thumbnail" data-reel-id="8" tabindex="0" onclick="openReelModal(8)" aria-label="Abrir reel 8">
+                    <div class="reel-thumb-image">
+                        <span class="reel-play-icon">▶️</span>
+                    </div>
+                </div>
+                <div class="reel-thumbnail" data-reel-id="9" tabindex="0" onclick="openReelModal(9)" aria-label="Abrir reel 9">
+                    <div class="reel-thumb-image">
+                        <span class="reel-play-icon">▶️</span>
+                    </div>
+                </div>
+            </section>
         </section>
     </main>
+
+    <!-- Modal Reels personalizado (oculto por defecto)-->
+    <div class="reel-modal" id="reelModal" style="display: none;" tabindex="-1" aria-modal="true" role="dialog">
+        <div class="reel-modal-overlay" id="reelModalOverlay"></div>
+        <div class="modal-content" role="document">
+            <button class="modal-close-btn" id="closeReelModal" aria-label="Cerrar reel">&times;</button>
+            <div class="left-video-area" id="leftVideoArea">
+                <!-- Aquí se renderiza dinámicamente la tarjeta "Good Night" -->
+                <div id="reelContent"></div>
+            </div>
+            <aside class="right-interactions">
+                <div class="interact-icons">
+                    <button class="reel-btn" aria-label="Like">
+                        <span class="icon-like" aria-hidden="true">🤍</span>
+                    </button>
+                    <button class="reel-btn" aria-label="Comentar">
+                        <span class="icon-comment" aria-hidden="true">💬</span>
+                    </button>
+                    <button class="reel-btn" aria-label="Compartir">
+                        <span class="icon-share" aria-hidden="true">📤</span>
+                    </button>
+                    <button class="reel-btn" aria-label="Guardar">
+                        <span class="icon-save" aria-hidden="true">🔖</span>
+                    </button>
+                </div>
+                <div class="reel-modal-username">
+                    @andrea_dreams
+                </div>
+                <div class="reel-modal-desc">
+                    Buenas noches desde la ciudad de Shinchan 🌙✨ #goodnight #shinchan
+                </div>
+                <div class="reel-modal-audio">
+                    🎵 Shinchan Good Night - <span>audio original</span>
+                </div>
+            </aside>
+            <div class="reel-modal-comments-bar">
+                <input type="text" class="modal-comment-input" placeholder="Agrega un comentario..." aria-label="Agregar comentario" disabled>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carga lógica/reproductor -->
     <script src="js/reels.js"></script>
 </body>
 </html>
