@@ -1,4 +1,4 @@
-// VARIABLES
+// USUARIO ACTUAL
 const usuarioActual = localStorage.getItem("usuario") || "juan";
 let usuarioSeleccionado = null;
 
@@ -34,12 +34,11 @@ async function cargarChats() {
     const div = document.createElement("div");
     div.className = "chat";
     div.innerHTML = `
-      <img src="${usuario.foto}" alt="">
-      <div class="textoChat">
-        <h4>${usuario.username}</h4>
-        <p>${usuario.estado}</p>
-      </div>
-    `;
+<img src="${usuario.foto}" alt="">
+<div class="textoChat">
+  <h4>${usuario.username}</h4>
+  <p>${usuario.estado}</p>
+</div>`;
     div.addEventListener("click", () => { seleccionarChat(usuario); });
     listaChats.appendChild(div);
   });
@@ -52,7 +51,13 @@ function seleccionarChat(usuario) {
   enviarMensajeDiv.style.display = "flex";
   nombreChat.innerText = usuario.username;
   estadoUsuario.innerText = usuario.estado;
-  fotoUsuario.src = usuario.foto;
+  if (usuario.foto) {
+    fotoUsuario.src = usuario.foto;
+  }
+  const mensajeInicio = document.querySelector(".mensajeInicio");
+  if (mensajeInicio) {
+    mensajeInicio.style.display = "none";
+  }
   cargarMensajes();
 }
 
@@ -64,6 +69,10 @@ async function cargarMensajes() {
     .select("*")
     .or(`and(emisor.eq.${usuarioActual},receptor.eq.${usuarioSeleccionado.username}),and(emisor.eq.${usuarioSeleccionado.username},receptor.eq.${usuarioActual})`)
     .order("fecha", { ascending: true });
+  if (error) {
+    console.log(error);
+    return;
+  }
   contenedorMensajes.innerHTML = "";
   data.forEach(msg => {
     const div = document.createElement("div");
@@ -111,15 +120,12 @@ document.getElementById("buscar").addEventListener("input", () => {
   });
 });
 
-// TIEMPO REAL
-supabase
-  .channel("mensajes")
-  .on("postgres_changes", {
-    event: "INSERT",
-    schema: "public",
-    table: "mensajes"
-  }, payload => { if (usuarioSeleccionado) cargarMensajes(); })
-  .subscribe();
+// ACTUALIZAR MENSAJES CADA 2 SEGUNDOS
+setInterval(() => {
+  if (usuarioSeleccionado) {
+    cargarMensajes();
+  }
+}, 2000);
 
 // PROBAR CONEXION
 async function probarConexion() {
