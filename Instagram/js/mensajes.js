@@ -1,8 +1,13 @@
-// USUARIO ACTUAL
+// ==================== SUPABASE ====================
+const SUPABASE_URL = 'https://kmtpdatdvkeocksijsya.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_qmrn1HJZgV5OnD1Bc7e1Ng_JClOATIt';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ==================== USUARIO ACTUAL ====================
 const usuarioActual = localStorage.getItem("usuario") || "juan";
 let usuarioSeleccionado = null;
 
-// ELEMENTOS HTML
+// ==================== ELEMENTOS HTML ====================
 const listaChats = document.getElementById("listaChats");
 const contenedorMensajes = document.getElementById("contenedorMensajes");
 const headerChat = document.querySelector(".headerChat");
@@ -14,14 +19,14 @@ const fotoUsuario = document.getElementById("fotoUsuario");
 const inputMensaje = document.getElementById("inputMensaje");
 const btnEnviar = document.getElementById("btnEnviar");
 
-// INICIALIZAR
+// ==================== INICIALIZAR ====================
 nombreUsuarioActual.innerText = usuarioActual;
 headerChat.style.display = "none";
 enviarMensajeDiv.style.display = "none";
 
-// CARGAR CHATS
+// ==================== CARGAR CHATS ====================
 async function cargarChats() {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClient
     .from("usuarios")
     .select("*")
     .neq("username", usuarioActual);
@@ -44,27 +49,23 @@ async function cargarChats() {
   });
 }
 
-// SELECCIONAR CHAT
+// ==================== SELECCIONAR CHAT ====================
 function seleccionarChat(usuario) {
   usuarioSeleccionado = usuario;
   headerChat.style.display = "flex";
   enviarMensajeDiv.style.display = "flex";
   nombreChat.innerText = usuario.username;
   estadoUsuario.innerText = usuario.estado;
-  if (usuario.foto) {
-    fotoUsuario.src = usuario.foto;
-  }
+  if (usuario.foto) fotoUsuario.src = usuario.foto;
   const mensajeInicio = document.querySelector(".mensajeInicio");
-  if (mensajeInicio) {
-    mensajeInicio.style.display = "none";
-  }
+  if (mensajeInicio) mensajeInicio.style.display = "none";
   cargarMensajes();
 }
 
-// CARGAR MENSAJES
+// ==================== CARGAR MENSAJES ====================
 async function cargarMensajes() {
   if (usuarioSeleccionado == null) return;
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClient
     .from("mensajes")
     .select("*")
     .or(`and(emisor.eq.${usuarioActual},receptor.eq.${usuarioSeleccionado.username}),and(emisor.eq.${usuarioSeleccionado.username},receptor.eq.${usuarioActual})`)
@@ -83,12 +84,12 @@ async function cargarMensajes() {
   contenedorMensajes.scrollTop = contenedorMensajes.scrollHeight;
 }
 
-// ENVIAR MENSAJE
+// ==================== ENVIAR MENSAJE ====================
 async function enviarMensaje() {
   if (usuarioSeleccionado == null) return;
   const texto = inputMensaje.value.trim();
   if (texto === "") return;
-  const { error } = await supabase
+  const { error } = await supabaseClient
     .from("mensajes")
     .insert([{
       emisor: usuarioActual,
@@ -104,13 +105,13 @@ async function enviarMensaje() {
   cargarMensajes();
 }
 
-// BOTON
+// ==================== BOTÓN ====================
 btnEnviar.addEventListener("click", enviarMensaje);
 
-// ENTER
+// ==================== ENTER ====================
 inputMensaje.addEventListener("keypress", e => { if (e.key === "Enter") enviarMensaje(); });
 
-// BUSCADOR
+// ==================== BUSCADOR ====================
 document.getElementById("buscar").addEventListener("input", () => {
   const texto = document.getElementById("buscar").value.toLowerCase();
   const chats = document.querySelectorAll(".chat");
@@ -120,21 +121,19 @@ document.getElementById("buscar").addEventListener("input", () => {
   });
 });
 
-// ACTUALIZAR MENSAJES CADA 2 SEGUNDOS
+// ==================== ACTUALIZAR MENSAJES CADA 2 SEGUNDOS ====================
 setInterval(() => {
-  if (usuarioSeleccionado) {
-    cargarMensajes();
-  }
+  if (usuarioSeleccionado) cargarMensajes();
 }, 2000);
 
-// PROBAR CONEXION
+// ==================== PROBAR CONEXIÓN ====================
 async function probarConexion() {
-  const { data, error } = await supabase.from("usuarios").select("*");
+  const { data, error } = await supabaseClient.from("usuarios").select("*");
   console.log("USUARIOS");
   console.log(data);
   console.log(error);
 }
 probarConexion();
 
-// INICIAR
+// ==================== INICIAR ====================
 cargarChats();
