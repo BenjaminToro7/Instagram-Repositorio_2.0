@@ -1,228 +1,516 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-    font-family: Arial, sans-serif;
-    background-color: #fafafa;
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  background-color: #fafafa;
+  min-height: 100vh;
 }
 
-.page-wrapper{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    gap: 50px;
-    padding: 20px;
+/* ===== LAYOUT PRINCIPAL ===== */
+.page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  gap: 50px;
+  padding: 40px 20px;
+  animation: fadeIn 0.6s ease-out;
 }
 
-/* ===== PANEL IZQUIERDO ===== */
-
-.phone-mockup{
-    width: 280px;
-    height: 550px;
-    background-color: white;
-    border: 10px solid black;
-    border-radius: 30px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+/* ===== PANEL IZQUIERDO — MOCKUP TELÉFONO ===== */
+.left-panel {
+  flex-shrink: 0;
 }
 
-.phone-screen{
-    width: 100%;
-    height: 100%;
-    background-color: white;
+.phone-mockup {
+  width: 280px;
+  height: 560px;
+  background-color: #fff;
+  border: 10px solid #1a1a1a;
+  border-radius: 36px;
+  overflow: hidden;
+  box-shadow:
+    0 8px 28px rgba(0, 0, 0, 0.18),
+    0 0 0 2px #333;
+  position: relative;
 }
 
-.phone-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    border-bottom: 1px solid #ddd;
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
 }
 
-.phone-logo{
-    font-size: 24px;
-    font-family: "Grand Hotel", cursive;
+.phone-feed {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.phone-stories{
-    display: flex;
-    gap: 10px;
-    padding: 15px;
+/* Header del teléfono */
+.phone-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #efefef;
 }
 
-.story-bubble{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af);
+.phone-logo {
+  font-family: 'Grand Hotel', cursive;
+  font-size: 24px;
 }
 
-.phone-post{
-    padding: 10px;
+.phone-icons {
+  display: flex;
+  align-items: center;
 }
 
-.post-header{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
+/* Stories */
+.phone-stories {
+  display: flex;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #efefef;
+  overflow-x: auto;
 }
 
-.post-avatar{
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background-color: #ccc;
+.story-bubble {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.post-image{
-    width: 100%;
-    height: 250px;
-    background-color: #ddd;
-    border-radius: 10px;
+.story-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  border: 2px solid #fff;
 }
 
-.post-actions{
-    margin-top: 10px;
-    font-size: 20px;
+.a1 { background-color: #ff6b6b; }
+.a2 { background-color: #48dbfb; }
+.a3 { background-color: #ff9ff3; }
+.a4 { background-color: #54a0ff; }
+
+/* Publicación */
+.phone-post {
+  padding: 12px 16px;
+  flex: 1;
 }
 
-/* ===== PANEL DERECHO ===== */
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
 
-.right-panel{
-    width: 350px;
+.post-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
+  flex-shrink: 0;
+}
+
+.post-user {
+  font-size: 13px;
+  font-weight: 600;
+  color: #262626;
+  flex: 1;
+}
+
+.post-more {
+  margin-left: auto;
+}
+
+.post-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.3);
+  font-size: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.post-image::after {
+  content: '📷 324 me gusta';
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  color: #fff;
+  font-size: 11px;
+  background: rgba(0,0,0,0.45);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.post-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.post-actions svg {
+  cursor: default;
+}
+
+/* ===== PANEL DERECHO — FORMULARIO ===== */
+.right-panel {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .login-card,
-.register-card{
-    background-color: white;
-    border: 1px solid #dbdbdb;
-    padding: 30px;
-    margin-bottom: 10px;
-    text-align: center;
+.register-card {
+  background-color: #fff;
+  border: 1px solid #dbdbdb;
+  padding: 30px 40px;
+  text-align: center;
 }
 
-.logo{
-    font-family: "Grand Hotel", cursive;
-    font-size: 50px;
-    margin-bottom: 30px;
+.login-card {
+  animation: slideUp 0.5s ease-out;
 }
 
-.form-group{
-    margin-bottom: 10px;
+.logo {
+  font-family: 'Grand Hotel', cursive;
+  font-size: 46px;
+  margin-bottom: 20px;
 }
 
-.input-field{
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #dbdbdb;
-    border-radius: 5px;
-    background-color: #fafafa;
+/* ===== BOTONES SOCIALES ===== */
+.btn-social {
+  width: 100%;
+  padding: 9px 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.25s, opacity 0.25s;
+  margin-bottom: 8px;
 }
 
-.input-field:focus{
-    outline: none;
-    border-color: #0095f6;
+.btn-facebook {
+  background-color: #0095f6;
+  color: #fff;
 }
 
-.btn-primary{
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    background-color: #0095f6;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 10px;
+.btn-facebook:hover {
+  background-color: #1877f2;
 }
 
-.btn-primary:hover{
-    background-color: #1877f2;
+.btn-google {
+  background-color: #fff;
+  color: #262626;
+  border: 1px solid #dbdbdb;
 }
 
-.separator{
-    display: flex;
-    align-items: center;
-    margin: 20px 0;
+.btn-google:hover {
+  background-color: #fafafa;
 }
 
-.line{
-    flex: 1;
-    height: 1px;
-    background-color: #ccc;
+/* ===== SEPARADOR ===== */
+.separator {
+  display: flex;
+  align-items: center;
+  margin: 14px 0;
 }
 
-.or-text{
-    margin: 0 10px;
-    color: #777;
-    font-size: 14px;
+.line {
+  flex: 1;
+  height: 1px;
+  background-color: #dbdbdb;
 }
 
-.btn-facebook{
-    background: none;
-    border: none;
-    color: #385185;
-    font-weight: bold;
-    cursor: pointer;
+.or-text {
+  margin: 0 14px;
+  color: #737373;
+  font-size: 13px;
+  font-weight: 600;
 }
 
-.fb-icon{
-    margin-right: 5px;
+/* ===== FORMULARIO ===== */
+#loginForm {
+  text-align: left;
 }
 
-.forgot-password{
-    display: block;
-    margin-top: 15px;
-    text-decoration: none;
-    color: #00376b;
-    font-size: 13px;
+.form-group {
+  margin-bottom: 8px;
+  position: relative;
 }
 
-.link-registro{
-    text-decoration: none;
-    color: #0095f6;
-    font-weight: bold;
+.input-field {
+  width: 100%;
+  padding: 11px 10px;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  background-color: #fafafa;
+  font-size: 12px;
+  font-family: 'Inter', Arial, sans-serif;
+  transition: border-color 0.25s, background-color 0.25s;
+  outline: none;
 }
 
-.app-badges{
-    text-align: center;
+.input-field:focus {
+  border-color: #8e8e8e;
+  background-color: #fff;
 }
 
-.badges-row{
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 15px;
+/* Estados de validación */
+.input-field.success {
+  border-color: #2ecc71;
+  background-color: #f0fff4;
+  padding-right: 32px;
 }
 
-.badge{
-    background-color: black;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
+.input-field.error {
+  border-color: #e74c3c;
+  background-color: #fff5f5;
+  padding-right: 32px;
+}
+
+.error-msg {
+  display: block;
+  font-size: 11px;
+  color: #e74c3c;
+  min-height: 14px;
+  margin-top: 1px;
+  transition: opacity 0.2s;
+}
+
+/* Password wrapper y toggle */
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper .input-field {
+  padding-right: 40px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s;
+}
+
+.toggle-password:hover {
+  opacity: 0.6;
+}
+
+/* ===== BOTÓN PRINCIPAL ===== */
+.btn-primary {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: #0095f6;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background-color 0.25s, opacity 0.2s;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #1877f2;
+}
+
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ===== OLVIDASTE CONTRASEÑA ===== */
+.forgot-password {
+  display: block;
+  margin-top: 14px;
+  text-decoration: none;
+  color: #00376b;
+  font-size: 13px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.forgot-password:hover {
+  color: #0095f6;
+}
+
+/* ===== CAJA DE REGISTRO ===== */
+.register-card p {
+  font-size: 14px;
+  color: #262626;
+}
+
+.link-login {
+  text-decoration: none;
+  color: #0095f6;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.link-login:hover {
+  color: #1877f2;
+}
+
+/* ===== APP BADGES ===== */
+.app-badges {
+  text-align: center;
+}
+
+.app-badges p {
+  font-size: 14px;
+  color: #262626;
+  margin-bottom: 12px;
+}
+
+.badges-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.badge {
+  background-color: #000;
+  color: #fff;
+  padding: 9px 22px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.25s;
+}
+
+.badge:hover {
+  opacity: 0.8;
+}
+
+/* ===== ANIMACIONES ===== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-5px); }
+  40%      { transform: translateX(5px); }
+  60%      { transform: translateX(-3px); }
+  80%      { transform: translateX(3px); }
+}
+
+.shake {
+  animation: shake 0.35s ease;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  vertical-align: middle;
+  margin-right: 6px;
 }
 
 /* ===== RESPONSIVE ===== */
 
-@media (max-width: 768px){
+/* Tablets y pantallas medianas */
+@media (max-width: 876px) {
+  .left-panel {
+    display: none;
+  }
 
-    .left-panel{
-        display: none;
-    }
+  .page-wrapper {
+    flex-direction: column;
+    gap: 20px;
+    padding: 30px 20px;
+  }
 
-    .page-wrapper{
-        flex-direction: column;
-    }
+  .right-panel {
+    width: 100%;
+    max-width: 380px;
+  }
+}
 
-    .right-panel{
-        width: 100%;
-        max-width: 350px;
-    }
+/* Móviles */
+@media (max-width: 480px) {
+  .page-wrapper {
+    padding: 0;
+    background-color: #fff;
+    min-height: 100vh;
+  }
+
+  .right-panel {
+    max-width: 100%;
+  }
+
+  .login-card,
+  .register-card {
+    border: none;
+    background: transparent;
+    padding: 24px 28px;
+  }
+
+  .login-card {
+    padding-top: 40px;
+  }
+
+  .app-badges {
+    display: none;
+  }
 }
