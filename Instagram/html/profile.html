@@ -1,11 +1,193 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram 2026 · Perfil</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>My Profile</h1>
+
+  <!-- ========================= -->
+  <!-- BARRA DE NAVEGACIÓN SUPERIOR -->
+  <!-- ========================= -->
+
+  <header class="top-nav">
+    <div class="top-nav__container">
+      <div class="top-nav__logo">
+        <span class="top-nav__logo-icon">📸</span>
+        <span class="top-nav__logo-text">Instagram</span>
+      </div>
+      <div class="top-nav__search">
+        <input type="text" placeholder="Buscar" class="top-nav__search-input">
+      </div>
+      <div class="top-nav__icons">
+        <span class="top-nav__icon" title="Notificaciones">❤️</span>
+        <span class="top-nav__icon" title="Mensajes">💬</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================= -->
+  <!-- CONTENEDOR PRINCIPAL -->
+  <!-- ========================= -->
+
+  <main class="profile">
+
+    <!-- ========================= -->
+    <!-- CABECERA DEL PERFIL -->
+    <!-- ========================= -->
+     
+    <section class="profile__header">
+
+      <!-- Foto de perfil -->
+      <div class="profile__avatar-wrapper">
+        <div class="profile__avatar-ring">
+          <img id="profileAvatar" src="https://i.pravatar.cc/300?u=maria_dev" alt="Foto de perfil" class="profile__avatar">
+        </div>
+      </div>
+
+      <!-- Información principal -->
+      <div class="profile__info">
+        <div class="profile__name-row">
+          <h1 id="profileUsername" class="profile__username">maria_dev</h1>
+          <button id="btnEditProfile" class="btn btn--primary">Editar perfil</button>
+          <button id="btnShareProfile" class="btn btn--icon" title="Compartir perfil">📤</button>
+          <button id="btnSwitchAccount" class="btn btn--icon" title="Cambiar de cuenta">🔁</button>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="profile__stats">
+          <div class="profile__stat">
+            <span class="profile__stat-number" id="statPosts">42</span>
+            <span class="profile__stat-label">publicaciones</span>
+          </div>
+          <div class="profile__stat">
+            <span class="profile__stat-number" id="statFollowers">12.5K</span>
+            <span class="profile__stat-label">seguidores</span>
+          </div>
+          <div class="profile__stat">
+            <span class="profile__stat-number" id="statFollowing">843</span>
+            <span class="profile__stat-label">seguidos</span>
+          </div>
+        </div>
+
+        <!-- Nombre real, biografía y enlace -->
+        <div class="profile__details">
+          <p class="profile__real-name" id="profileRealName">María García</p>
+          <p class="profile__bio" id="profileBio">
+            ✈️ Viajera | 📸 Fotógrafa | 🌍 Explorando el mundo<br>
+            📍 Basada en Madrid
+          </p>
+          <a href="#" class="profile__link" id="profileLink" target="_blank">www.misviajes.com</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================= -->
+    <!-- HISTORIAS DESTACADAS -->
+    <!-- ========================= -->
+    <section class="stories" id="storiesContainer">
+      <!-- Las historias se generan desde JavaScript -->
+    </section>
+
+    <!-- ========================= -->
+    <!-- GALERÍA DE PUBLICACIONES -->
+    <!-- ========================= -->
+    <section class="gallery" id="galleryContainer">
+      <!-- Las publicaciones se generan desde JavaScript -->
+    </section>
+
+  </main>
+
+  <!-- ========================= -->
+  <!-- BARRA DE NAVEGACIÓN INFERIOR -->
+  <!-- ========================= -->
+  <nav class="bottom-nav">
+    <div class="bottom-nav__container">
+      <span class="bottom-nav__item bottom-nav__item--active" title="Inicio">🏠</span>
+      <span class="bottom-nav__item" title="Buscar">🔍</span>
+      <span class="bottom-nav__item" title="Reels">🎬</span>
+      <span class="bottom-nav__item" title="Tienda">🛍️</span>
+      <span class="bottom-nav__item" title="Perfil">
+        <img id="navAvatar" src="https://i.pravatar.cc/300?u=maria_dev" alt="Tu perfil" class="bottom-nav__avatar">
+      </span>
+    </div>
+  </nav>
+
+  <!-- ========================= -->
+  <!-- MODAL DE HISTORIA -->
+  <!-- ========================= -->
+  <div class="modal-overlay" id="storyModal">
+    <div class="modal modal--story">
+      <button class="modal__close" id="closeStory">&times;</button>
+      <div class="modal__story-content">
+        <div class="modal__story-image" id="storyImage">
+          <!-- Se rellena con JS: fondo o imagen -->
+        </div>
+        <div class="modal__story-info">
+          <h3 class="modal__story-name" id="storyName"></h3>
+          <p class="modal__story-desc" id="storyDescription"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================= -->
+  <!-- MODAL DE PUBLICACIÓN -->
+  <!-- ========================= -->
+  <div class="modal-overlay" id="postModal">
+    <div class="modal modal--post">
+      <button class="modal__close" id="closePost">&times;</button>
+      <div class="modal__post-content">
+        <div class="modal__post-image" id="postImage">
+          <!-- Se rellena con JS -->
+        </div>
+        <div class="modal__post-details">
+          <div class="modal__post-user">
+            <img id="postUserAvatar" src="" alt="Avatar" class="modal__post-avatar">
+            <span class="modal__post-username" id="postUsername"></span>
+          </div>
+          <p class="modal__post-desc" id="postDescription"></p>
+          <div class="modal__post-stats">
+            <span class="modal__post-stat">❤️ <span id="postLikes"></span></span>
+            <span class="modal__post-stat">💬 <span id="postComments"></span></span>
+            <span class="modal__post-stat">📤 <span id="postShares"></span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================= -->
+  <!-- MODAL DE EDITAR PERFIL -->
+  <!-- ========================= -->
+
+  <div class="modal-overlay" id="editModal">
+    <div class="modal modal--edit">
+      <button class="modal__close" id="closeEdit">&times;</button>
+      <h2 class="modal__title">Editar perfil</h2>
+      <form class="edit-form" id="editForm">
+        <label class="edit-form__label">
+          Nombre
+          <input type="text" class="edit-form__input" id="editName" placeholder="Tu nombre">
+        </label>
+        <label class="edit-form__label">
+          Biografía
+          <textarea class="edit-form__textarea" id="editBio" placeholder="Cuéntanos sobre ti" rows="4"></textarea>
+        </label>
+        <label class="edit-form__label">
+          Enlace
+          <input type="text" class="edit-form__input" id="editLink" placeholder="www.tusitio.com">
+        </label>
+        <div class="edit-form__actions">
+          <button type="submit" class="btn btn--primary">Guardar</button>
+          <button type="button" class="btn btn--secondary" id="cancelEdit">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
