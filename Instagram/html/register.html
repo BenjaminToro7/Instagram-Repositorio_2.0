@@ -1,141 +1,59 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instagram – Registrarse</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/global.css">
   <link rel="stylesheet" href="../css/register.css">
 </head>
 <body>
-
   <div class="page-wrapper">
-
-    <!-- PANEL IZQUIERDO: Mockup de teléfono -->
     <div class="left-panel">
       <div class="phone-mockup">
         <div class="phone-screen">
           <div class="phone-feed">
-
-            <!-- Header del teléfono -->
-            <div class="phone-header">
-              <span class="phone-logo">Instagram</span>
-              <div class="phone-icons">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#262626" stroke-width="2"><polyline points="18 8 22 12 18 16"></polyline><polyline points="6 8 2 12 6 16"></polyline><line x1="2" y1="12" x2="22" y2="12"></line></svg>
-              </div>
-            </div>
-
-            <!-- Stories circulares -->
-            <div class="phone-stories">
-              <div class="story-bubble"><div class="story-avatar a1"></div></div>
-              <div class="story-bubble"><div class="story-avatar a2"></div></div>
-              <div class="story-bubble"><div class="story-avatar a3"></div></div>
-              <div class="story-bubble"><div class="story-avatar a4"></div></div>
-            </div>
-
-            <!-- Publicación de ejemplo -->
-            <div class="phone-post">
-              <div class="post-header">
-                <div class="post-avatar"></div>
-                <span class="post-user">searchmatchgroup</span>
-                <svg class="post-more" width="16" height="16" viewBox="0 0 24 24" fill="#262626"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
-              </div>
-              <div class="post-image"></div>
-              <div class="post-actions">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#262626" stroke-width="2"><path d="M20.8 11.5a7.5 7.5 0 0 0-14.2-3.5A7.5 7.5 0 0 0 3.2 16l-1.2 5 5-1.2a7.5 7.5 0 0 0 3.5 1.2"/><circle cx="18" cy="18" r="4"/><line x1="18" y1="16" x2="18" y2="20"/><line x1="16" y1="18" x2="20" y2="18"/></svg>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#262626" stroke-width="2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#262626" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="12" cy="12" r="3"/><circle cx="16.5" cy="7.5" r="1.5"/></svg>
-              </div>
-            </div>
-
+            <div class="phone-header"><span class="phone-logo">Instagram</span></div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- PANEL DERECHO: Formulario de registro -->
     <div class="right-panel">
-
       <div class="register-card">
-        <!-- Logo -->
         <h1 class="logo">Instagram</h1>
         <p class="subtitle">Regístrate para ver fotos y videos de tus amigos.</p>
-
-        <!-- Botón Facebook -->
-        <button class="btn-social btn-facebook" onclick="window.open('https://www.facebook.com','_blank')">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-          Registrarse con Facebook
-        </button>
-
-        <!-- Botón Google -->
-        <button class="btn-social btn-google" onclick="window.open('https://accounts.google.com','_blank')">
-          <svg width="16" height="16" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.54 28.59A14.5 14.5 0 0 1 9.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.99 23.99 0 0 0 0 24c0 3.77.87 7.35 2.56 10.56l7.98-5.97z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 5.97C6.51 42.62 14.62 48 24 48z"/></svg>
-          Registrarse con Google
-        </button>
-
-        <!-- Separador O -->
-        <div class="separator">
-          <span class="line"></span>
-          <span class="or-text">O</span>
-          <span class="line"></span>
-        </div>
-
-        <!-- Formulario -->
-        <form id="registerForm" novalidate>
-
+        <form id="registerForm">
           <div class="form-group">
-            <input type="text" id="nombre" class="input-field" placeholder="Nombre completo"
-                   data-validate="nombre" autocomplete="name" />
-            <span class="error-msg"></span>
+            <input type="text" id="username" class="input-field" placeholder="Nombre de usuario" required>
           </div>
-
           <div class="form-group">
-            <input type="text" id="username" class="input-field" placeholder="Nombre de usuario"
-                   data-validate="username" autocomplete="username" />
-            <span class="error-msg"></span>
+            <input type="email" id="email" class="input-field" placeholder="Correo electrónico" required>
           </div>
-
-          <div class="form-group">
-            <input type="email" id="email" class="input-field" placeholder="Correo electrónico"
-                   data-validate="email" autocomplete="email" />
-            <span class="error-msg"></span>
+          <div class="form-group password-wrapper">
+            <input type="password" id="password" class="input-field" placeholder="Contraseña" required>
+            <span class="toggle-password" data-target="password">
+              <i class="fa-regular fa-eye-slash"></i>
+            </span>
           </div>
-
-          <div class="form-group">
-            <input type="password" id="password" class="input-field" placeholder="Contraseña"
-                   data-validate="password" autocomplete="new-password" />
-            <span class="error-msg"></span>
+          <div class="form-group password-wrapper">
+            <input type="password" id="confirm-password" class="input-field" placeholder="Confirmar contraseña" required>
+            <span class="toggle-password" data-target="confirm-password">
+              <i class="fa-regular fa-eye-slash"></i>
+            </span>
           </div>
-
-          <div class="form-group">
-            <input type="password" id="confirm-password" class="input-field" placeholder="Confirmar contraseña"
-                   data-validate="confirm-password" autocomplete="new-password" />
-            <span class="error-msg"></span>
-          </div>
-
-          <button type="submit" class="btn-primary" id="btn-register" disabled>
-            Registrarse
-          </button>
-
+          <button type="submit" class="btn-primary">Registrarse</button>
+          <div id="registerError" class="error-msg"></div>
         </form>
-
         <p class="terms">
-          Al registrarte, aceptas nuestras
-          <a href="#">Condiciones</a>, la
-          <a href="#">Política de privacidad</a> y la
-          <a href="#">Política de cookies</a>.
+          Al registrarte, aceptas nuestras <a href="#">Condiciones</a>, la <a href="#">Política de privacidad</a> y la <a href="#">Política de cookies</a>.
         </p>
       </div>
-
-      <!-- Caja de inicio de sesión -->
       <div class="login-card">
-        <p>
-          ¿Ya tienes una cuenta?
-          <a href="index.html" class="link-login">Inicia sesión</a>
-        </p>
+        <p>¿Ya tienes una cuenta? <a href="index.html" class="link-login">Inicia sesión</a></p>
       </div>
-
-      <!-- App store badges -->
       <div class="app-badges">
         <p>Descarga la aplicación.</p>
         <div class="badges-row">
@@ -143,10 +61,10 @@
           <button class="badge" onclick="window.open('https://play.google.com/store/apps/details?id=com.instagram.android','_blank')">Google Play</button>
         </div>
       </div>
-
     </div>
   </div>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="../js/toggle-password.js"></script>
   <script src="../js/register.js"></script>
 </body>
 </html>

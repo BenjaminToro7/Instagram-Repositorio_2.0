@@ -1,22 +1,21 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instagram – Iniciar sesión</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="../css/index.css">
 </head>
 <body>
-
   <div class="page-wrapper">
-
-    <!-- PANEL IZQUIERDO: Mockup de teléfono -->
+    <!-- Panel izquierdo: mockup de teléfono -->
     <div class="left-panel">
       <div class="phone-mockup">
         <div class="phone-screen">
           <div class="phone-feed">
-
             <!-- Header del teléfono -->
             <div class="phone-header">
               <span class="phone-logo">Instagram</span>
@@ -47,7 +46,6 @@
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#262626" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="12" cy="12" r="3"/><circle cx="16.5" cy="7.5" r="1.5"/></svg>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -55,7 +53,6 @@
 
     <!-- PANEL DERECHO: Formulario de inicio de sesión -->
     <div class="right-panel">
-
       <div class="login-card">
         <!-- Logo -->
         <h1 class="logo">Instagram</h1>
@@ -125,10 +122,10 @@
           <button class="badge" onclick="window.open('https://play.google.com/store/apps/details?id=com.instagram.android','_blank')">Google Play</button>
         </div>
       </div>
-
     </div>
   </div>
-
-  <script src="../js/login.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="../js/toggle-password.js"></script>
+  <script src="../js/index.js"></script>
 </body>
 </html>

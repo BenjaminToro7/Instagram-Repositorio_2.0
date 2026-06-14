@@ -1,193 +1,85 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-    <title>Instagram - Mensajes</title>
-    
-    <link rel="stylesheet"
-          href="../css/messages.css">
-    
-          <!-- ICONOS -->
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram · Mensajes</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/messages.css">
 </head>
 <body>
-    
-    <!-- BARRA IZQUIERDA -->
-    <nav class="sidebar">
+  <nav class="sidebar">
+    <div class="logo-link">
+      <span class="logo-text">Instagram</span>
+      <span class="logo-icon"><i class="fa-brands fa-instagram"></i></span>
+    </div>
+    <div class="nav-items">
+      <a href="home.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
+      <div class="nav-item" id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i><span>Buscar</span></div>
+      <a href="search.html" class="nav-item"><i class="fa-regular fa-compass"></i><span>Explorar</span></a>
+      <a href="reels.html" class="nav-item"><i class="fa-solid fa-clapperboard"></i><span>Reels</span></a>
+      <a href="messages.html" class="nav-item active"><i class="fa-regular fa-paper-plane"></i><span>Mensajes</span></a>
+      <a href="notifications.html" class="nav-item"><i class="fa-regular fa-heart"></i><span>Notificaciones</span></a>
+      <div class="nav-item" id="createBtn"><i class="fa-regular fa-square-plus"></i><span>Crear</span></div>
+      <a href="profile.html" class="nav-item" id="profileNavItem"><img class="avatar-xs" id="navAvatar" src="" alt=""><span>Perfil</span></a>
+      <div class="nav-item more-active" id="moreBtn"><i class="fa-solid fa-bars"></i><span>Más</span></div>
+    </div>
+  </nav>
 
-        <div class="logo">
-            <i class="fa-brands fa-instagram"></i>
-        </div>
-
-        <div class="menu">
-
-            <a href="home.html">
-                <i class="fa-solid fa-house"></i>
-            </a>
-
-            <a href="search.html">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </a>
-
-            <a href="reels.html">
-                <i class="fa-solid fa-clapperboard"></i>
-            </a>
-
-            <a href="messages.html"
-               class="activo">
-                <i class="fa-solid fa-paper-plane"></i>
-            </a>
-
-            <a href="#">
-                <i class="fa-regular fa-heart"></i>
-            </a>
-
-            <a href="profile.html">
-                <i class="fa-regular fa-user"></i>
-            </a>
-        </div>
-
-        <div class="menuInferior">
-            <i class="fa-solid fa-bars"></i>
-        </div>
-    </nav>
-
+  <main class="main-content" style="display:flex;padding:0;">
     <!-- PANEL DE CHATS -->
     <aside class="panelChats">
-        <!-- Usuario -->
-
-        <div class="usuarioActual">
-
-            <h2 id="nombreUsuarioActual">
-                Usuario
-            </h2>
-
-            <i class="fa-regular fa-pen-to-square"></i>
-
-        </div>
-
-        <!-- Buscar -->
-
-        <div class="busqueda">
-
-            <i class="fa-solid fa-magnifying-glass"></i>
-
-            <input type="text" id="buscar" placeholder="Buscar">
-
-        </div>
-
-        <!-- Notas -->
-
-        <div class="notas">
-
-            <div id="listaNotas">
-
-                <!-- Se llenará desde JS -->
-
-            </div>
-
-        </div>
-
-        <!-- Titulo -->
-        <div class="tituloChats">
-
-            <h3>
-                Mensajes
-            </h3>
-
-            <a href="#">
-                Solicitudes
-            </a>
-
-        </div>
-
-        <!-- Lista Chats -->
-        <div id="listaChats">
-
-            <!-- Se llenará automáticamente -->
-
-        </div>
-
+      <div class="usuarioActual">
+        <h2 id="nombreUsuarioActual">Usuario</h2>
+        <i class="fa-regular fa-pen-to-square"></i>
+      </div>
+      <div class="busqueda">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="buscar" placeholder="Buscar">
+      </div>
+      <div class="tituloChats">
+        <h3>Mensajes</h3>
+        <a href="#">Solicitudes</a>
+      </div>
+      <div id="listaChats"></div>
     </aside>
 
-
-    <!-- CONVERSACIÓN -->
+    <!-- CONVERSACIÓN PRINCIPAL -->
     <section class="conversacion">
-
-        <!-- HEADER -->
-        <header class="headerChat">
-
-            <div class="infoChat">
-
-                <img id="fotoUsuario" alt="">
-
-                <div>
-
-                    <h3 id="nombreChat">
-                    Tus mensajes
-                    </h3>
-
-                    <p id="estadoUsuario">
-                    Selecciona una conversación
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="accionesChat">
-
-                <i class="fa-solid fa-phone"></i>
-
-                <i class="fa-solid fa-video"></i>
-
-                <i class="fa-solid fa-circle-info"></i>
-            </div>
-        </header>
-
-        <!-- MENSAJES -->
-        <div id="contenedorMensajes">
-            <div class="mensajeInicio">
-                <div class="circulo">
-                    <i class="fa-regular fa-paper-plane"></i>
-                </div>
-
-                <h2>
-                    Tus mensajes
-                </h2>
-
-                <p>
-                    Envía fotos y mensajes privados
-                    a un amigo o un grupo.
-                </p>
-
-                <button>
-                    Enviar mensaje
-                </button>
-            </div>
+      <header class="headerChat">
+        <div class="infoChat">
+          <img id="fotoUsuario" alt="">
+          <div>
+            <h3 id="nombreChat">Tus mensajes</h3>
+            <span id="estadoUsuario" style="font-size:12px;color:#a8a8a8;">Selecciona una conversación</span>
+          </div>
         </div>
-
-        <!-- INPUT -->
-        <div class="enviarMensaje">
-
-            <input type="text" id="inputMensaje" placeholder="Mensaje...">
-
-            <button  id="btnEnviar">
-                Enviar
-            </button>
+        <div class="accionesChat">
+          <i class="fa-solid fa-phone"></i>
+          <i class="fa-solid fa-video"></i>
+          <i class="fa-solid fa-circle-info"></i>
         </div>
+      </header>
 
+      <div id="contenedorMensajes">
+        <div class="mensajeInicio" id="mensajeInicio">
+          <div class="circulo"><i class="fa-regular fa-paper-plane"></i></div>
+          <h2>Tus mensajes</h2>
+          <p>Envía fotos y mensajes privados a un amigo o un grupo.</p>
+          <button>Enviar mensaje</button>
+        </div>
+      </div>
+
+      <div class="enviarMensaje" id="enviarMensajeDiv">
+        <input type="text" id="inputMensaje" placeholder="Mensaje..." autocomplete="off">
+        <button id="btnEnviar">Enviar</button>
+      </div>
     </section>
+  </main>
 
-    <!-- SUPABASE -->
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <script src="../js/mensajes.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="../js/mensajes.js"></script>
 </body>
-
 </html>

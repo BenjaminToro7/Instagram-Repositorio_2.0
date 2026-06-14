@@ -2,12 +2,12 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Instagram · Reels</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram · Notificaciones</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/global.css">
-    <link rel="stylesheet" href="../css/reels.css">
+    <link rel="stylesheet" href="../css/notifications.css">
 </head>
 <body>
     <nav class="sidebar">
@@ -19,22 +19,25 @@
             <a href="home.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
             <div class="nav-item" id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i><span>Buscar</span></div>
             <a href="search.html" class="nav-item"><i class="fa-regular fa-compass"></i><span>Explorar</span></a>
-            <a href="reels.html" class="nav-item active"><i class="fa-solid fa-clapperboard"></i><span>Reels</span></a>
+            <a href="reels.html" class="nav-item"><i class="fa-solid fa-clapperboard"></i><span>Reels</span></a>
             <a href="messages.html" class="nav-item"><i class="fa-regular fa-paper-plane"></i><span>Mensajes</span></a>
-            <a href="notifications.html" class="nav-item"><i class="fa-regular fa-heart"></i><span>Notificaciones</span></a>
+            <a href="notifications.html" class="nav-item active"><i class="fa-regular fa-heart"></i><span>Notificaciones</span></a>
             <div class="nav-item" id="createBtn"><i class="fa-regular fa-square-plus"></i><span>Crear</span></div>
             <a href="profile.html" class="nav-item" id="profileNavItem"><img class="avatar-xs" id="navAvatar" src="" alt=""><span>Perfil</span></a>
             <div class="nav-item more-active" id="moreBtn"><i class="fa-solid fa-bars"></i><span>Más</span></div>
         </div>
     </nav>
 
-    <main class="main-content" style="background:#000;">
-        <div class="reels-container">
-            <div id="reelsFeed" class="reels-feed"></div>
+    <main class="main-content">
+        <div style="max-width:600px;margin:0 auto;padding:30px 20px;">
+            <h2 style="font-size:24px;margin-bottom:24px;">Notificaciones</h2>
+            <div id="listaNotificaciones" class="lista-notificaciones">
+                <div class="empty-msg">Cargando notificaciones...</div>
+            </div>
         </div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <script src="../js/reels.js"></script>
+    <script src="../js/notifications.js"></script>
 </body>
 </html>

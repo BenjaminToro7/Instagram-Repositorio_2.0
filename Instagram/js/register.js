@@ -1,118 +1,99 @@
-(function () {
-  'use strict';
+const SUPABASE_URL = 'https://kmtpdatdvkeocksijsya.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_qmrn1HJZgV5OnD1Bc7e1Ng_JClOATIt';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  const form    = document.getElementById('registerForm');
-  const btn     = document.getElementById('btn-register');
-  const inputs  = form.querySelectorAll('[data-validate]');
+const registerForm = document.getElementById('registerForm');
+const errorDiv = document.getElementById('registerError');
+const btnRegistro = document.querySelector('.btn-primary');
 
-  // ===== REGLAS DE VALIDACIÓN =====
-  const rules = {
-    nombre: function (val) {
-      if (!val.trim())               return 'El nombre completo es obligatorio.';
-      if (val.trim().length < 3)     return 'Debe tener al menos 3 caracteres.';
-      return '';
-    },
-    username: function (val) {
-      if (!val.trim())               return 'El nombre de usuario es obligatorio.';
-      if (val.trim().length < 3)     return 'Debe tener al menos 3 caracteres.';
-      return '';
-    },
-    email: function (val) {
-      if (!val.trim())               return 'El correo electrónico es obligatorio.';
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim()))
-        return 'Ingresa un correo válido (ej. usuario@dominio.com).';
-      return '';
-    },
-    password: function (val) {
-      if (!val)                      return 'La contraseña es obligatoria.';
-      if (val.length < 8)            return 'Mínimo 8 caracteres.';
-      if (!/[A-Z]/.test(val))        return 'Debe contener al menos una mayúscula.';
-      if (!/[a-z]/.test(val))        return 'Debe contener al menos una minúscula.';
-      if (!/\d/.test(val))           return 'Debe contener al menos un número.';
-      return '';
-    },
-    'confirm-password': function (val) {
-      if (!val)                      return 'Confirma tu contraseña.';
-      if (val !== document.getElementById('password').value)
-        return 'Las contraseñas no coinciden.';
-      return '';
-    }
-  };
-
-  // ===== MOSTRAR ERROR / ÉXITO =====
-  function showError(input, msg) {
-    const group = input.closest('.form-group');
-    const errEl = group.querySelector('.error-msg');
-
-    input.classList.remove('success');
-    input.classList.add('error');
-    errEl.textContent = msg;
-    group.classList.add('shake');
-    setTimeout(function () { group.classList.remove('shake'); }, 350);
-  }
-
-  function showSuccess(input) {
-    const group = input.closest('.form-group');
-    const errEl = group.querySelector('.error-msg');
-
-    input.classList.remove('error');
-    input.classList.add('success');
-    errEl.textContent = '';
-  }
-
-  // ===== VALIDAR UN CAMPO =====
-  function validateField(input) {
-    const ruleName = input.getAttribute('data-validate');
-    if (!ruleName || !rules[ruleName]) return true;
-
-    const msg = rules[ruleName](input.value);
-
-    if (msg) {
-      showError(input, msg);
-      return false;
-    }
-    showSuccess(input);
-    return true;
-  }
-
-  // ===== VALIDAR TODO EL FORMULARIO =====
-  function checkFormValidity() {
-    let allValid = true;
-
-    inputs.forEach(function (inp) {
-      if (!validateField(inp)) allValid = false;
-    });
-
-    btn.disabled = !allValid;
-    return allValid;
-  }
-
-  // ===== EVENTOS EN TIEMPO REAL =====
-  inputs.forEach(function (inp) {
-    inp.addEventListener('input', function () {
-      validateField(inp);
-      checkFormValidity();
-    });
-
-    inp.addEventListener('blur', function () {
-      validateField(inp);
-      checkFormValidity();
-    });
-  });
-
-  // ===== ENVÍO DEL FORMULARIO =====
-  form.addEventListener('submit', function (e) {
+registerForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const username = document.getElementById('username').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const confirm = document.getElementById('confirm-password').value;
 
-    if (!checkFormValidity()) return;
+    // 1. Validaciones en el cliente
+    if (password !== confirm) {
+        errorDiv.innerText = '❌ Las contraseñas no coinciden';
+        return;
+    }
+    if (password.length < 6) {
+        errorDiv.innerText = '❌ La contraseña debe tener al menos 6 caracteres';
+        return;
+    }
+    if (username.length < 3) {
+        errorDiv.innerText = '❌ El nombre de usuario debe tener al menos 3 caracteres';
+        return;
+    }
+    if (!email.includes('@') || !email.includes('.')) {
+        errorDiv.innerText = '❌ Correo electrónico no válido';
+        return;
+    }
 
-    btn.disabled = true;
-    btn.textContent = 'Registrando…';
+    btnRegistro.disabled = true;
+    btnRegistro.textContent = 'Registrando...';
+    errorDiv.innerText = '';
 
-    setTimeout(function () {
-      alert('¡Registro exitoso! Bienvenido a Instagram.');
-      window.location.href = 'index.html';
-    }, 1200);
-  });
+    try {
+        // 2. Intentar crear el usuario en Supabase Auth
+        const { data, error: signUpError } = await supabaseClient.auth.signUp({ 
+            email, 
+            password,
+            options: {
+                data: { username: username }
+            }
+        });
 
-})();
+        // 3. Manejar específicamente los errores 400
+        if (signUpError) {
+            if (signUpError.message.includes('User already registered')) {
+                // Usuario ya existe. Ahora, intentamos iniciar sesión.
+                const { error: signInError } = await supabaseClient.auth.signInWithPassword({ email, password });
+                if (signInError) {
+                    // Si no puede iniciar sesión, la contraseña es incorrecta o el email no está confirmado.
+                    errorDiv.innerText = '⚠️ El email ya está registrado, pero la contraseña es incorrecta o no has confirmado tu cuenta.';
+                    btnRegistro.disabled = false;
+                    btnRegistro.textContent = 'Registrarse';
+                    return;
+                }
+                // Si el login funciona, el usuario ya existe y ya está autenticado.
+                console.log("Usuario existente, iniciando sesión.");
+            } else if (signUpError.message.includes('Email not confirmed')) {
+                errorDiv.innerText = '⚠️ El email ya está registrado pero no está confirmado. Revisa tu bandeja de entrada.';
+                btnRegistro.disabled = false;
+                btnRegistro.textContent = 'Registrarse';
+                return;
+            } else if (signUpError.message.includes('rate limit')) {
+                errorDiv.innerText = '⏳ Demasiadas solicitudes. Por favor, espera unos minutos e intenta de nuevo.';
+                btnRegistro.disabled = false;
+                btnRegistro.textContent = 'Registrarse';
+                return;
+            } else {
+                throw new Error(signUpError.message);
+            }
+        }
+
+        // 4. Si llegamos aquí, tenemos un usuario autenticado (ya sea nuevo o existente).
+        // Ahora, aseguramos que su perfil esté en la tabla 'usuarios'.
+        const fotoDefault = `https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 70)}`;
+        const { error: upsertError } = await supabaseClient
+            .from('usuarios')
+            .upsert([{ username, email, foto: fotoDefault, estado: 'Nuevo en Instagram' }], { onConflict: 'username' });
+            
+        if (upsertError) {
+            console.error("Error guardando el perfil del usuario:", upsertError);
+            errorDiv.innerText = '⚠️ Tu cuenta se creó, pero hubo un problema al guardar tu perfil. Puedes continuar.';
+        }
+
+        // 5. Guardamos el username en localStorage y redirigimos al inicio
+        localStorage.setItem('usuario', username);
+        window.location.href = 'home.html';
+
+    } catch (err) {
+        console.error(err);
+        errorDiv.innerText = `❌ Error: ${err.message}`;
+        btnRegistro.disabled = false;
+        btnRegistro.textContent = 'Registrarse';
+    }
+});

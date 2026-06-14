@@ -1,193 +1,122 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Instagram 2026 · Perfil</title>
-  <link rel="stylesheet" href="../css/profile.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram · Perfil</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/profile.css">
 </head>
 <body>
+    <nav class="sidebar">
+        <div class="logo-link">
+            <span class="logo-text">Instagram</span>
+            <span class="logo-icon"><i class="fa-brands fa-instagram"></i></span>
+        </div>
+        <div class="nav-items">
+            <a href="home.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
+            <div class="nav-item" id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i><span>Buscar</span></div>
+            <a href="search.html" class="nav-item"><i class="fa-regular fa-compass"></i><span>Explorar</span></a>
+            <a href="reels.html" class="nav-item"><i class="fa-solid fa-clapperboard"></i><span>Reels</span></a>
+            <a href="messages.html" class="nav-item"><i class="fa-regular fa-paper-plane"></i><span>Mensajes</span></a>
+            <a href="notifications.html" class="nav-item"><i class="fa-regular fa-heart"></i><span>Notificaciones</span></a>
+            <div class="nav-item" id="createBtn"><i class="fa-regular fa-square-plus"></i><span>Crear</span></div>
+            <a href="profile.html" class="nav-item active" id="profileNavItem"><img class="avatar-xs" id="navAvatar" src="" alt=""><span>Perfil</span></a>
+            <div class="nav-item more-active" id="moreBtn"><i class="fa-solid fa-bars"></i><span>Más</span></div>
+        </div>
+    </nav>
 
-  <!-- ========================= -->
-  <!-- BARRA DE NAVEGACIÓN SUPERIOR -->
-  <!-- ========================= -->
+    <main class="main-content">
+        <div style="max-width:935px;margin:0 auto;padding:30px 20px;">
+            <!-- HEADER -->
+            <div class="profile-header">
+                <div class="avatar-section">
+                    <img id="profileAvatar" src="">
+                    <button class="edit-avatar-btn" id="editAvatarBtn"><i class="fa-solid fa-camera"></i></button>
+                </div>
+                <div class="info-section">
+                    <div class="username-row">
+                        <h2 id="profileUsername">cargando...</h2>
+                        <span class="verified-badge" id="profileVerified" style="display:none;"><i class="fa-solid fa-circle-check"></i></span>
+                    </div>
+                    <div class="name-row"><span id="profileName">cargando...</span></div>
+                    <div class="stats-row">
+                        <div><strong id="postsCount">0</strong> publicaciones</div>
+                        <div><strong id="followersCount">0</strong> seguidores</div>
+                        <div><strong id="followingCount">0</strong> seguidos</div>
+                    </div>
+                    <div class="bio-row" id="profileBio" style="margin-top:12px;font-size:14px;"></div>
+                    <div class="profile-buttons" id="profileButtons"></div>
+                </div>
+            </div>
 
-  <header class="top-nav">
-    <div class="top-nav__container">
-      <div class="top-nav__logo">
-        <span class="top-nav__logo-icon">📸</span>
-        <span class="top-nav__logo-text">Instagram</span>
-      </div>
-      <div class="top-nav__search">
-        <input type="text" placeholder="Buscar" class="top-nav__search-input">
-      </div>
-      <div class="top-nav__icons">
-        <span class="top-nav__icon" title="Notificaciones">❤️</span>
-        <span class="top-nav__icon" title="Mensajes">💬</span>
-      </div>
+            <!-- TABS -->
+            <div class="tabs">
+                <div class="tab active" data-tab="posts"><i class="fa-solid fa-table-cells"></i><span>PUBLICACIONES</span></div>
+                <div class="tab" data-tab="reels"><i class="fa-solid fa-clapperboard"></i><span>REELS</span></div>
+                <div class="tab" data-tab="saved"><i class="fa-regular fa-bookmark"></i><span>GUARDADOS</span></div>
+                <div class="tab" data-tab="tagged"><i class="fa-regular fa-id-badge"></i><span>ETIQUETADAS</span></div>
+            </div>
+
+            <!-- GRID -->
+            <div class="posts-grid" id="postsGrid"></div>
+        </div>
+    </main>
+
+    <!-- Create Post Modal -->
+    <div class="modal-overlay" id="createModal">
+        <div class="modal-box" style="width:600px;padding:20px;max-height:90vh;display:flex;flex-direction:column;">
+            <button class="modal-close" id="closeCreateBtn">&times;</button>
+            <h2 style="text-align:center;margin-bottom:16px;font-size:16px;">Crear nueva publicación</h2>
+            <div style="flex:1;display:flex;flex-direction:column;gap:12px;">
+                <input type="file" id="postFileInput" accept="image/*,video/*" multiple style="color:#fff;font-size:14px;">
+                <textarea id="postCaption" placeholder="Escribe un pie de foto..." style="background:#121212;border:1px solid #262626;border-radius:8px;padding:12px;color:#fff;font-size:14px;resize:none;height:80px;"></textarea>
+                <input type="text" id="postLocation" placeholder="Añadir ubicación" style="background:#121212;border:1px solid #262626;border-radius:8px;padding:12px;color:#fff;font-size:14px;">
+                <div id="postPreview" style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;max-height:200px;overflow-y:auto;"></div>
+                <button id="submitPostBtn" style="background:#0095f6;color:#fff;border:none;border-radius:8px;padding:10px;font-weight:600;cursor:pointer;">Compartir</button>
+            </div>
+        </div>
     </div>
-  </header>
 
-  <!-- ========================= -->
-  <!-- CONTENEDOR PRINCIPAL -->
-  <!-- ========================= -->
-
-  <main class="profile">
-
-    <!-- ========================= -->
-    <!-- CABECERA DEL PERFIL -->
-    <!-- ========================= -->
-     
-    <section class="profile__header">
-
-      <!-- Foto de perfil -->
-      <div class="profile__avatar-wrapper">
-        <div class="profile__avatar-ring">
-          <img id="profileAvatar" src="https://i.pravatar.cc/300?u=maria_dev" alt="Foto de perfil" class="profile__avatar">
+    <!-- Post Detail Modal -->
+    <div class="modal-overlay" id="postModal">
+        <div class="modal-box post-modal-content" style="display:flex;max-width:900px;width:90vw;max-height:90vh;overflow:hidden;background:#000;border-radius:16px;">
+            <button class="modal-close" id="closePostModalBtn">&times;</button>
+            <div class="post-modal-left" style="flex:1;background:#000;display:flex;align-items:center;justify-content:center;min-height:400px;max-height:90vh;overflow:hidden;">
+                <div id="postModalMedia" style="max-width:100%;max-height:100%;"></div>
+            </div>
+            <div class="post-modal-right" style="width:400px;display:flex;flex-direction:column;border-left:1px solid #262626;">
+                <div class="post-modal-header" style="display:flex;align-items:center;gap:12px;padding:16px;border-bottom:1px solid #262626;">
+                    <img id="postModalAvatar" src="" style="width:32px;height:32px;border-radius:50%;object-fit:cover;">
+                    <span id="postModalUsername" style="font-weight:600;font-size:14px;"></span>
+                </div>
+                <div class="post-modal-comments" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;">
+                    <div id="postModalCaption" style="font-size:14px;display:flex;gap:8px;">
+                        <strong id="postModalCaptionUser"></strong>
+                        <span id="postModalCaptionText"></span>
+                    </div>
+                    <div id="postModalCommentsList"></div>
+                </div>
+                <div class="post-modal-actions" style="padding:12px 16px;border-top:1px solid #262626;">
+                    <div style="display:flex;gap:16px;margin-bottom:8px;">
+                        <button class="action-btn" id="postModalLikeBtn"><i class="fa-regular fa-heart" style="font-size:24px;color:#fff;"></i></button>
+                        <button class="action-btn"><i class="fa-regular fa-comment" style="font-size:24px;color:#fff;"></i></button>
+                        <button class="action-btn"><i class="fa-regular fa-paper-plane" style="font-size:24px;color:#fff;"></i></button>
+                    </div>
+                    <div id="postModalLikes" style="font-weight:600;font-size:14px;margin-bottom:4px;"></div>
+                    <div id="postModalTime" style="font-size:10px;color:#a8a8a8;margin-bottom:8px;"></div>
+                    <div style="display:flex;gap:8px;border-top:1px solid #262626;padding-top:12px;">
+                        <input type="text" id="postModalCommentInput" placeholder="Agrega un comentario..." style="flex:1;background:none;border:none;color:#fff;font-size:14px;outline:none;">
+                        <button id="postModalCommentBtn" style="background:none;border:none;color:#0095f6;font-weight:600;cursor:pointer;">Publicar</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <!-- Información principal -->
-      <div class="profile__info">
-        <div class="profile__name-row">
-          <h1 id="profileUsername" class="profile__username">maria_dev</h1>
-          <button id="btnEditProfile" class="btn btn--primary">Editar perfil</button>
-          <button id="btnShareProfile" class="btn btn--icon" title="Compartir perfil">📤</button>
-          <button id="btnSwitchAccount" class="btn btn--icon" title="Cambiar de cuenta">🔁</button>
-        </div>
-
-        <!-- Estadísticas -->
-        <div class="profile__stats">
-          <div class="profile__stat">
-            <span class="profile__stat-number" id="statPosts">42</span>
-            <span class="profile__stat-label">publicaciones</span>
-          </div>
-          <div class="profile__stat">
-            <span class="profile__stat-number" id="statFollowers">12.5K</span>
-            <span class="profile__stat-label">seguidores</span>
-          </div>
-          <div class="profile__stat">
-            <span class="profile__stat-number" id="statFollowing">843</span>
-            <span class="profile__stat-label">seguidos</span>
-          </div>
-        </div>
-
-        <!-- Nombre real, biografía y enlace -->
-        <div class="profile__details">
-          <p class="profile__real-name" id="profileRealName">María García</p>
-          <p class="profile__bio" id="profileBio">
-            ✈️ Viajera | 📸 Fotógrafa | 🌍 Explorando el mundo<br>
-            📍 Basada en Madrid
-          </p>
-          <a href="#" class="profile__link" id="profileLink" target="_blank">www.misviajes.com</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================= -->
-    <!-- HISTORIAS DESTACADAS -->
-    <!-- ========================= -->
-    <section class="stories" id="storiesContainer">
-      <!-- Las historias se generan desde JavaScript -->
-    </section>
-
-    <!-- ========================= -->
-    <!-- GALERÍA DE PUBLICACIONES -->
-    <!-- ========================= -->
-    <section class="gallery" id="galleryContainer">
-      <!-- Las publicaciones se generan desde JavaScript -->
-    </section>
-
-  </main>
-
-  <!-- ========================= -->
-  <!-- BARRA DE NAVEGACIÓN INFERIOR -->
-  <!-- ========================= -->
-  <nav class="bottom-nav">
-    <div class="bottom-nav__container">
-      <span class="bottom-nav__item bottom-nav__item--active" title="Inicio">🏠</span>
-      <span class="bottom-nav__item" title="Buscar">🔍</span>
-      <span class="bottom-nav__item" title="Reels">🎬</span>
-      <span class="bottom-nav__item" title="Tienda">🛍️</span>
-      <span class="bottom-nav__item" title="Perfil">
-        <img id="navAvatar" src="https://i.pravatar.cc/300?u=maria_dev" alt="Tu perfil" class="bottom-nav__avatar">
-      </span>
     </div>
-  </nav>
 
-  <!-- ========================= -->
-  <!-- MODAL DE HISTORIA -->
-  <!-- ========================= -->
-  <div class="modal-overlay" id="storyModal">
-    <div class="modal modal--story">
-      <button class="modal__close" id="closeStory">&times;</button>
-      <div class="modal__story-content">
-        <div class="modal__story-image" id="storyImage">
-          <!-- Se rellena con JS: fondo o imagen -->
-        </div>
-        <div class="modal__story-info">
-          <h3 class="modal__story-name" id="storyName"></h3>
-          <p class="modal__story-desc" id="storyDescription"></p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========================= -->
-  <!-- MODAL DE PUBLICACIÓN -->
-  <!-- ========================= -->
-  <div class="modal-overlay" id="postModal">
-    <div class="modal modal--post">
-      <button class="modal__close" id="closePost">&times;</button>
-      <div class="modal__post-content">
-        <div class="modal__post-image" id="postImage">
-          <!-- Se rellena con JS -->
-        </div>
-        <div class="modal__post-details">
-          <div class="modal__post-user">
-            <img id="postUserAvatar" src="" alt="Avatar" class="modal__post-avatar">
-            <span class="modal__post-username" id="postUsername"></span>
-          </div>
-          <p class="modal__post-desc" id="postDescription"></p>
-          <div class="modal__post-stats">
-            <span class="modal__post-stat">❤️ <span id="postLikes"></span></span>
-            <span class="modal__post-stat">💬 <span id="postComments"></span></span>
-            <span class="modal__post-stat">📤 <span id="postShares"></span></span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========================= -->
-  <!-- MODAL DE EDITAR PERFIL -->
-  <!-- ========================= -->
-
-  <div class="modal-overlay" id="editModal">
-    <div class="modal modal--edit">
-      <button class="modal__close" id="closeEdit">&times;</button>
-      <h2 class="modal__title">Editar perfil</h2>
-      <form class="edit-form" id="editForm">
-        <label class="edit-form__label">
-          Nombre
-          <input type="text" class="edit-form__input" id="editName" placeholder="Tu nombre">
-        </label>
-        <label class="edit-form__label">
-          Biografía
-          <textarea class="edit-form__textarea" id="editBio" placeholder="Cuéntanos sobre ti" rows="4"></textarea>
-        </label>
-        <label class="edit-form__label">
-          Enlace
-          <input type="text" class="edit-form__input" id="editLink" placeholder="www.tusitio.com">
-        </label>
-        <div class="edit-form__actions">
-          <button type="submit" class="btn btn--primary">Guardar</button>
-          <button type="button" class="btn btn--secondary" id="cancelEdit">Cancelar</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="../js/profile.js"></script>
 </body>
 </html>
