@@ -1,223 +1,144 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-body {
-    background: #000;
-    color: white;
-    display: flex;
-}
-
-.sidebar {
-    width: 72px;
-    height: 100vh;
-    border-right: 1px solid #262626;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 0;
-}
-
-.logo {
-    font-size: 28px;
-}
-
-.menu {
-    display: flex;
-    flex-direction: column;
-    gap: 35px;
-}
-
-.menu a {
-    color: white;
-    font-size: 25px;
-}
-
-.menu a.activo {
-    color: #0095f6;
-}
-
-.menuInferior {
-    font-size: 25px;
-}
-
-.profile-container {
-    width: 950px;
-    margin: auto;
-    padding: 40px;
-}
-
 .profile-header {
-    display: flex;
-    gap: 80px;
+  display: flex;
+  gap: 60px;
+  margin-bottom: 40px;
 }
-
-.avatar-section {
-    position: relative;
-}
-
+.avatar-section { position: relative; flex-shrink: 0; }
 .avatar-section img {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    object-fit: cover;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
 }
-
 .edit-avatar-btn {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 40px;
-    height: 40px;
-    background: #363636;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 36px;
+  height: 36px;
+  background: #363636;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #fff;
+  font-size: 16px;
 }
-
 .username-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
 }
-
-.username-row h2 {
-    font-size: 30px;
-}
-
-.name-row {
-    margin-top: 15px;
-    font-weight: bold;
-}
-
+.username-row h2 { font-size: 20px; font-weight: 400; }
+.name-row { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
 .stats-row {
-    display: flex;
-    gap: 35px;
-    margin-top: 25px;
+  display: flex;
+  gap: 32px;
+  margin-bottom: 8px;
 }
-
-.profile-buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 25px;
+.stats-row div { font-size: 15px; }
+.stats-row strong { font-weight: 600; }
+.bio-row { font-size: 14px; margin-bottom: 8px; white-space: pre-line; }
+.profile-buttons { display: flex; gap: 8px; }
+.profile-buttons button {
+  background: #262626;
+  border: none;
+  color: #fff;
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
 }
-
-.edit-btn,
-.archive-btn {
-    background: #262626;
-    border: none;
-    color: white;
-    padding: 8px 22px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.edit-btn:hover,
-.archive-btn:hover {
-    background: #363636;
-}
-
-.stories-section {
-    margin-top: 50px;
-}
-
-.story {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 90px;
-}
-
-.story-circle {
-    width: 80px;
-    height: 80px;
-    border: 2px solid #363636;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 35px;
-    color: #888;
-}
-
-.story span {
-    margin-top: 10px;
-}
+.profile-buttons button:hover { background: #363636; }
+.profile-buttons .primary-btn { background: #0095f6; }
+.profile-buttons .primary-btn:hover { background: #1877f2; }
 
 .tabs {
-    display: flex;
-    justify-content: center;
-    gap: 180px;
-    margin-top: 40px;
-    border-top: 1px solid #262626;
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  border-top: 1px solid #262626;
+  margin-top: 32px;
 }
-
 .tab {
-    padding: 18px;
-    color: #8e8e8e;
-    font-size: 22px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 0;
+  color: #8e8e8e;
+  font-size: 12px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  margin-top: -1px;
+  border-top: 1px solid transparent;
+  transition: color 0.15s;
 }
-
-.tab.active {
-    color: white;
-    border-top: 1px solid white;
-}
+.tab i { font-size: 12px; }
+.tab:hover { color: #fff; }
+.tab.active { color: #fff; border-top-color: #fff; }
 
 .posts-grid {
-    margin-top: 30px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  margin-top: 4px;
 }
-
-.post-item img {
-    width: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
+.posts-grid .post-item {
+  position: relative;
+  aspect-ratio: 1;
+  cursor: pointer;
+  overflow: hidden;
 }
-
-.welcome-box {
-    margin-top: 50px;
+.posts-grid .post-item img,
+.posts-grid .post-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
-
-.cards {
-    display: flex;
-    gap: 15px;
+.posts-grid .post-item .post-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  opacity: 0;
+  transition: opacity 0.15s;
 }
-
-.card {
-    background: #0f0f0f;
-    border: 1px solid #262626;
-    padding: 25px;
-    width: 280px;
-    border-radius: 8px;
+.posts-grid .post-item:hover .post-overlay { opacity: 1; }
+.posts-grid .post-item .post-overlay span {
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
+.posts-grid .post-item .post-overlay i { font-size: 18px; }
 
-.card i {
-    font-size: 45px;
+.profile-empty {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 60px 20px;
+  color: #a8a8a8;
 }
+.profile-empty i { font-size: 48px; margin-bottom: 16px; display: block; color: #fff; }
+.profile-empty h3 { font-size: 24px; margin-bottom: 8px; color: #fff; }
 
-.card h4 {
-    margin-top: 20px;
+@media (max-width: 768px) {
+  .profile-header { flex-direction: column; align-items: center; text-align: center; gap: 24px; }
+  .info-section { display: flex; flex-direction: column; align-items: center; }
+  .profile-buttons { justify-content: center; }
+  .tabs { gap: 24px; }
+  .tab span { display: none; }
 }
-
-.card p {
-    margin-top: 15px;
-    color: #a8a8a8;
-}
-
-.card button {
-    margin-top: 25px;
-    background: #4f5bff;
-    border: none;
-    color: white;
-    padding: 10px;
-    border-radius: 8px;
-    width: 100%;
+@media (max-width: 640px) {
+  .posts-grid { gap: 2px; }
 }

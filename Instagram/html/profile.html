@@ -3,104 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil</title>
+    <title>Instagram · Perfil</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/profile.css">
 </head>
 <body>
-    <!-- SIDEBAR -->
     <nav class="sidebar">
-        <div class="logo">
-            <i class="fa-brands fa-instagram"></i>
+        <div class="logo-link">
+            <span class="logo-text">Instagram</span>
+            <span class="logo-icon"><i class="fa-brands fa-instagram"></i></span>
         </div>
-        <div class="menu">
-            <a href="home.html"><i class="fa-solid fa-house"></i></a>
-            <a href="search.html"><i class="fa-solid fa-magnifying-glass"></i></a>
-            <a href="reels.html"><i class="fa-solid fa-clapperboard"></i></a>
-            <a href="messages.html"><i class="fa-regular fa-paper-plane"></i></a>
-            <a href="notifications.html"><i class="fa-regular fa-heart"></i></a>
-            <a href="profile.html" class="activo"><i class="fa-regular fa-user"></i></a>
-        </div>
-        <div class="menuInferior">
-            <i class="fa-solid fa-bars"></i>
+        <div class="nav-items">
+            <a href="home.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
+            <div class="nav-item" id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i><span>Buscar</span></div>
+            <a href="search.html" class="nav-item"><i class="fa-regular fa-compass"></i><span>Explorar</span></a>
+            <a href="reels.html" class="nav-item"><i class="fa-solid fa-clapperboard"></i><span>Reels</span></a>
+            <a href="messages.html" class="nav-item"><i class="fa-regular fa-paper-plane"></i><span>Mensajes</span></a>
+            <a href="notifications.html" class="nav-item"><i class="fa-regular fa-heart"></i><span>Notificaciones</span></a>
+            <div class="nav-item" id="createBtn"><i class="fa-regular fa-square-plus"></i><span>Crear</span></div>
+            <a href="profile.html" class="nav-item active" id="profileNavItem"><img class="avatar-xs" id="navAvatar" src="" alt=""><span>Perfil</span></a>
+            <div class="nav-item more-active" id="moreBtn"><i class="fa-solid fa-bars"></i><span>Más</span></div>
         </div>
     </nav>
 
-    <!-- CONTENEDOR -->
-    <main class="profile-container">
-        <!-- HEADER -->
-        <div class="profile-header">
-            <div class="avatar-section">
-                <img id="profileAvatar" src="">
-                <div class="edit-avatar-btn">
-                    <i class="fa-solid fa-camera"></i>
+    <main class="main-content">
+        <div style="max-width:935px;margin:0 auto;padding:30px 20px;">
+            <!-- HEADER -->
+            <div class="profile-header">
+                <div class="avatar-section">
+                    <img id="profileAvatar" src="">
+                    <button class="edit-avatar-btn" id="editAvatarBtn"><i class="fa-solid fa-camera"></i></button>
+                </div>
+                <div class="info-section">
+                    <div class="username-row">
+                        <h2 id="profileUsername">cargando...</h2>
+                        <span class="verified-badge" id="profileVerified" style="display:none;"><i class="fa-solid fa-circle-check"></i></span>
+                    </div>
+                    <div class="name-row"><span id="profileName">cargando...</span></div>
+                    <div class="stats-row">
+                        <div><strong id="postsCount">0</strong> publicaciones</div>
+                        <div><strong id="followersCount">0</strong> seguidores</div>
+                        <div><strong id="followingCount">0</strong> seguidos</div>
+                    </div>
+                    <div class="bio-row" id="profileBio" style="margin-top:12px;font-size:14px;"></div>
+                    <div class="profile-buttons" id="profileButtons"></div>
                 </div>
             </div>
-            <div class="info-section">
-                <div class="username-row">
-                    <h2 id="profileUsername">cargando...</h2>
-                    <i class="fa-regular fa-circle-check"></i>
-                </div>
-                <div class="name-row">
-                    <span id="profileName">cargando...</span>
-                </div>
-                <div class="stats-row">
-                    <div><strong id="postsCount">0</strong> publicaciones</div>
-                    <div><strong id="followersCount">0</strong> seguidores</div>
-                    <div><strong id="followingCount">0</strong> seguidos</div>
-                </div>
-                <div class="profile-buttons">
-                    <button class="edit-btn">Editar perfil</button>
-                    <button class="archive-btn">Ver archivo</button>
-                </div>
+
+            <!-- TABS -->
+            <div class="tabs">
+                <div class="tab active" data-tab="posts"><i class="fa-solid fa-table-cells"></i><span>PUBLICACIONES</span></div>
+                <div class="tab" data-tab="reels"><i class="fa-solid fa-clapperboard"></i><span>REELS</span></div>
+                <div class="tab" data-tab="saved"><i class="fa-regular fa-bookmark"></i><span>GUARDADOS</span></div>
+                <div class="tab" data-tab="tagged"><i class="fa-regular fa-id-badge"></i><span>ETIQUETADAS</span></div>
             </div>
-        </div>
 
-        <!-- HISTORIAS -->
-        <div class="stories-section">
-            <div class="story">
-                <div class="story-circle">
-                    <i class="fa-solid fa-plus"></i>
-                </div>
-                <span>Nuevo</span>
-            </div>
-        </div>
-
-        <!-- TABS -->
-        <div class="tabs">
-            <div class="tab active"><i class="fa-solid fa-table-cells"></i></div>
-            <div class="tab"><i class="fa-regular fa-bookmark"></i></div>
-            <div class="tab"><i class="fa-regular fa-id-badge"></i></div>
-        </div>
-
-        <!-- GRID -->
-        <div class="posts-grid" id="postsGrid"></div>
-
-        <!-- PRIMEROS PASOS -->
-        <div class="welcome-box">
-            <h3>Primeros pasos</h3>
-            <div class="cards">
-                <div class="card">
-                    <i class="fa-regular fa-camera"></i>
-                    <h4>Comparte fotos</h4>
-                    <p>Cuando compartas fotos, aparecerán en tu perfil.</p>
-                    <button>Comparte tu primera foto</button>
-                </div>
-                <div class="card">
-                    <i class="fa-solid fa-phone"></i>
-                    <h4>Añade tu número</h4>
-                    <p>Añade tu número para recuperar la cuenta.</p>
-                    <button>Añadir número</button>
-                </div>
-                <div class="card">
-                    <i class="fa-regular fa-image"></i>
-                    <h4>Añadir foto</h4>
-                    <p>Añade una foto del perfil.</p>
-                    <button>Añadir foto</button>
-                </div>
-            </div>
+            <!-- GRID -->
+            <div class="posts-grid" id="postsGrid"></div>
         </div>
     </main>
+
+    <!-- Create Post Modal -->
+    <div class="modal-overlay" id="createModal">
+        <div class="modal-box" style="width:600px;padding:20px;max-height:90vh;display:flex;flex-direction:column;">
+            <button class="modal-close" id="closeCreateBtn">&times;</button>
+            <h2 style="text-align:center;margin-bottom:16px;font-size:16px;">Crear nueva publicación</h2>
+            <div style="flex:1;display:flex;flex-direction:column;gap:12px;">
+                <input type="file" id="postFileInput" accept="image/*,video/*" multiple style="color:#fff;font-size:14px;">
+                <textarea id="postCaption" placeholder="Escribe un pie de foto..." style="background:#121212;border:1px solid #262626;border-radius:8px;padding:12px;color:#fff;font-size:14px;resize:none;height:80px;"></textarea>
+                <input type="text" id="postLocation" placeholder="Añadir ubicación" style="background:#121212;border:1px solid #262626;border-radius:8px;padding:12px;color:#fff;font-size:14px;">
+                <div id="postPreview" style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;max-height:200px;overflow-y:auto;"></div>
+                <button id="submitPostBtn" style="background:#0095f6;color:#fff;border:none;border-radius:8px;padding:10px;font-weight:600;cursor:pointer;">Compartir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Post Detail Modal -->
+    <div class="modal-overlay" id="postModal">
+        <div class="modal-box post-modal-content" style="display:flex;max-width:900px;width:90vw;max-height:90vh;overflow:hidden;background:#000;border-radius:16px;">
+            <button class="modal-close" id="closePostModalBtn">&times;</button>
+            <div class="post-modal-left" style="flex:1;background:#000;display:flex;align-items:center;justify-content:center;min-height:400px;max-height:90vh;overflow:hidden;">
+                <div id="postModalMedia" style="max-width:100%;max-height:100%;"></div>
+            </div>
+            <div class="post-modal-right" style="width:400px;display:flex;flex-direction:column;border-left:1px solid #262626;">
+                <div class="post-modal-header" style="display:flex;align-items:center;gap:12px;padding:16px;border-bottom:1px solid #262626;">
+                    <img id="postModalAvatar" src="" style="width:32px;height:32px;border-radius:50%;object-fit:cover;">
+                    <span id="postModalUsername" style="font-weight:600;font-size:14px;"></span>
+                </div>
+                <div class="post-modal-comments" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;">
+                    <div id="postModalCaption" style="font-size:14px;display:flex;gap:8px;">
+                        <strong id="postModalCaptionUser"></strong>
+                        <span id="postModalCaptionText"></span>
+                    </div>
+                    <div id="postModalCommentsList"></div>
+                </div>
+                <div class="post-modal-actions" style="padding:12px 16px;border-top:1px solid #262626;">
+                    <div style="display:flex;gap:16px;margin-bottom:8px;">
+                        <button class="action-btn" id="postModalLikeBtn"><i class="fa-regular fa-heart" style="font-size:24px;color:#fff;"></i></button>
+                        <button class="action-btn"><i class="fa-regular fa-comment" style="font-size:24px;color:#fff;"></i></button>
+                        <button class="action-btn"><i class="fa-regular fa-paper-plane" style="font-size:24px;color:#fff;"></i></button>
+                    </div>
+                    <div id="postModalLikes" style="font-weight:600;font-size:14px;margin-bottom:4px;"></div>
+                    <div id="postModalTime" style="font-size:10px;color:#a8a8a8;margin-bottom:8px;"></div>
+                    <div style="display:flex;gap:8px;border-top:1px solid #262626;padding-top:12px;">
+                        <input type="text" id="postModalCommentInput" placeholder="Agrega un comentario..." style="flex:1;background:none;border:none;color:#fff;font-size:14px;outline:none;">
+                        <button id="postModalCommentBtn" style="background:none;border:none;color:#0095f6;font-weight:600;cursor:pointer;">Publicar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="../js/profile.js"></script>

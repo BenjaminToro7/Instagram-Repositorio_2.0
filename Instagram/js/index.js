@@ -8,8 +8,8 @@ const btnLogin = document.querySelector('.btn-primary');
 
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const inputValue = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
+    const inputValue = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
 
     btnLogin.disabled = true;
     btnLogin.textContent = 'Iniciando sesión...';
