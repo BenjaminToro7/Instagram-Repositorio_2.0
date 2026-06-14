@@ -1,168 +1,131 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 body {
-    background: #fafafa;
+  font-family: 'Inter', Arial, sans-serif;
+  background-color: #fafafa;
+  min-height: 100vh;
 }
 .page-wrapper {
-    display: flex;
-    min-height: 100vh;
-    max-width: 1000px;
-    margin: 0 auto;
-    align-items: center;
-    justify-content: center;
-    gap: 32px;
-    padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  gap: 50px;
+  padding: 40px 20px;
+  animation: fadeIn 0.6s ease-out;
 }
-/* PANEL IZQUIERDO (mockup de teléfono) */
-.left-panel {
-    display: none;
+.left-panel { flex-shrink: 0; }
+.phone-mockup {
+  width: 280px; height: 560px; background: #fff;
+  border: 10px solid #1a1a1a; border-radius: 36px; overflow: hidden;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.18), 0 0 0 2px #333;
 }
-@media (min-width: 800px) {
-    .left-panel {
-        display: block;
-        width: 380px;
-    }
-    .phone-mockup {
-        background: #000;
-        border-radius: 40px;
-        padding: 15px 8px;
-        box-shadow: 0 0 0 8px #1e1e1e, 0 0 0 12px #2c2c2c, 0 20px 30px rgba(0,0,0,0.3);
-    }
-    .phone-screen {
-        background: #fff;
-        border-radius: 30px;
-        overflow-y: auto;
-        height: 580px;
-        width: 100%;
-    }
-    .phone-feed {
-        padding: 10px;
-    }
-    .phone-header {
-        display: flex;
-        justify-content: space-between;
-        padding: 8px 10px;
-        border-bottom: 1px solid #dbdbdb;
-    }
-    .phone-logo {
-        font-family: 'Grand Hotel', cursive;
-        font-size: 22px;
-    }
-    .phone-stories {
-        display: flex;
-        gap: 12px;
-        padding: 12px 10px;
-    }
-    .story-bubble {
-        width: 60px;
-        height: 60px;
-        background: linear-gradient(45deg, #f09433, #d62976);
-        border-radius: 50%;
-    }
-    .phone-post .post-image {
-        background: #e0e0e0;
-        height: 250px;
-        border-radius: 8px;
-        margin-top: 10px;
-    }
+.phone-screen { width: 100%; height: 100%; background: #fff; }
+.phone-feed { height: 100%; display: flex; flex-direction: column; }
+.phone-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 16px; border-bottom: 1px solid #efefef;
 }
-/* PANEL DERECHO (formulario) */
-.right-panel {
-    flex: 1;
-    max-width: 350px;
+.phone-logo { font-family: 'Grand Hotel', cursive; font-size: 24px; }
+.phone-icons { display: flex; align-items: center; }
+.phone-stories {
+  display: flex; gap: 10px; padding: 12px 16px;
+  border-bottom: 1px solid #efefef; overflow-x: auto;
 }
-.login-card {
-    background: white;
-    border: 1px solid #dbdbdb;
-    border-radius: 8px;
-    padding: 40px 30px;
-    text-align: center;
-    margin-bottom: 15px;
+.story-bubble {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
-.logo {
-    font-family: 'Grand Hotel', cursive;
-    font-size: 48px;
-    margin-bottom: 30px;
+.story-avatar { width: 50px; height: 50px; border-radius: 50%; border: 2px solid #fff; }
+.a1 { background-color: #ff6b6b; }
+.a2 { background-color: #48dbfb; }
+.a3 { background-color: #ff9ff3; }
+.a4 { background-color: #54a0ff; }
+.phone-post { padding: 12px 16px; flex: 1; }
+.post-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.post-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af); }
+.post-user { font-size: 13px; font-weight: 600; color: #262626; flex: 1; }
+.post-more { margin-left: auto; }
+.post-image {
+  width: 100%; aspect-ratio: 1; background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 4px; position: relative; overflow: hidden;
 }
-.form-group {
-    margin-bottom: 12px;
+.post-image::after {
+  content: '📷 324 me gusta'; position: absolute; bottom: 12px; left: 12px;
+  color: #fff; font-size: 11px; background: rgba(0,0,0,0.45);
+  padding: 4px 10px; border-radius: 4px;
 }
+.post-actions { display: flex; gap: 14px; margin-top: 10px; align-items: center; }
+.right-panel { width: 350px; display: flex; flex-direction: column; gap: 10px; }
+.login-card, .register-card {
+  background: #fff; border: 1px solid #dbdbdb; padding: 30px 40px; text-align: center;
+}
+.login-card { animation: slideUp 0.5s ease-out; }
+.logo { font-family: 'Grand Hotel', cursive; font-size: 46px; margin-bottom: 20px; }
+.btn-social {
+  width: 100%; padding: 9px 12px; border: none; border-radius: 8px;
+  font-size: 14px; font-weight: 600; cursor: pointer; display: flex;
+  align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px;
+}
+.btn-facebook { background: #0095f6; color: #fff; }
+.btn-google { background: #fff; color: #262626; border: 1px solid #dbdbdb; }
+.separator { display: flex; align-items: center; margin: 14px 0; }
+.line { flex: 1; height: 1px; background: #dbdbdb; }
+.or-text { margin: 0 14px; color: #737373; font-size: 13px; font-weight: 600; }
+#loginForm { text-align: left; }
+.form-group { margin-bottom: 8px; position: relative; }
 .input-field {
-    width: 100%;
-    padding: 10px;
-    background: #fafafa;
-    border: 1px solid #dbdbdb;
-    border-radius: 6px;
-    font-size: 14px;
+  width: 100%; padding: 11px 10px; border: 1px solid #dbdbdb;
+  border-radius: 4px; background: #fafafa; font-size: 12px;
+  font-family: 'Inter', Arial, sans-serif; outline: none;
+}
+.input-field:focus { border-color: #8e8e8e; background: #fff; }
+.input-field.success { border-color: #2ecc71; background: #f0fff4; padding-right: 32px; }
+.input-field.error { border-color: #e74c3c; background: #fff5f5; padding-right: 32px; }
+.error-msg { display: block; font-size: 11px; color: #e74c3c; min-height: 14px; }
+.password-wrapper { position: relative; }
+.password-wrapper .input-field { padding-right: 40px; }
+.toggle-password {
+  position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer; padding: 4px; display: flex;
 }
 .btn-primary {
-    background: #0095f6;
-    color: white;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    padding: 8px;
-    width: 100%;
-    cursor: pointer;
-    margin-top: 8px;
+  width: 100%; padding: 10px; border: none; border-radius: 8px;
+  background: #0095f6; color: #fff; font-size: 14px; font-weight: 600;
+  cursor: pointer; margin-top: 6px;
 }
-.separator {
-    display: flex;
-    align-items: center;
-    margin: 20px 0;
-}
-.line {
-    flex: 1;
-    height: 1px;
-    background: #dbdbdb;
-}
-.or-text {
-    margin: 0 18px;
-    color: #8e8e8e;
-    font-size: 13px;
-}
-.forgot-password {
-    font-size: 12px;
-    text-decoration: none;
-    color: #00376b;
-}
-.app-badges {
-    text-align: center;
-}
-.badges-row {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 12px;
-}
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.forgot-password { display: block; margin-top: 14px; color: #00376b; font-size: 13px; }
+.register-card p { font-size: 14px; color: #262626; }
+.link-login { color: #0095f6; font-weight: 600; }
+.app-badges { text-align: center; }
+.app-badges p { font-size: 14px; color: #262626; margin-bottom: 12px; }
+.badges-row { display: flex; justify-content: center; gap: 10px; }
 .badge {
-    background: #000;
-    color: white;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 12px;
-    border: none;
-    cursor: pointer;
+  background: #000; color: #fff; padding: 9px 22px; border: none;
+  border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer;
 }
-.error-msg {
-    color: #ed4956;
-    font-size: 13px;
-    margin-top: 10px;
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+.loading-spinner {
+  display: inline-block; width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
+  border-radius: 50%; animation: spin 0.6s linear infinite;
 }
-/* Mostrar/ocultar contraseña */
-.password-wrapper {
-    position: relative;
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (max-width: 876px) {
+  .left-panel { display: none; }
+  .page-wrapper { flex-direction: column; gap: 20px; padding: 30px 20px; }
+  .right-panel { width: 100%; max-width: 380px; }
 }
-.toggle-password {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #8e8e8e;
-    font-size: 18px;
+@media (max-width: 480px) {
+  .page-wrapper { padding: 0; background: #fff; min-height: 100vh; }
+  .right-panel { max-width: 100%; }
+  .login-card, .register-card { border: none; background: transparent; padding: 24px 28px; }
+  .login-card { padding-top: 40px; }
+  .app-badges { display: none; }
 }
