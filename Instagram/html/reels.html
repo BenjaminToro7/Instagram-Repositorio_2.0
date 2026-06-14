@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Reels • Instagram</title>
+    <link rel="stylesheet" href="../css/reels.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+<!-- Sidebar idéntica a la de tus otras páginas -->
+<nav class="sidebar">
+    <div class="logo"><i class="fa-brands fa-instagram"></i></div>
+    <div class="menu">
+        <a href="home.html"><i class="fa-solid fa-house"></i></a>
+        <a href="search.html"><i class="fa-solid fa-magnifying-glass"></i></a>
+        <a href="reels.html" class="activo"><i class="fa-solid fa-clapperboard"></i></a>
+        <a href="messages.html"><i class="fa-solid fa-paper-plane"></i></a>
+        <a href="#"><i class="fa-regular fa-heart"></i></a>
+        <a href="profile.html"><i class="fa-regular fa-user"></i></a>
+    </div>
+    <div class="menuInferior"><i class="fa-solid fa-bars"></i></div>
+</nav>
+
+<!-- Contenedor principal del feed -->
+<main class="reels-container">
+    <div id="reelsFeed" class="reels-feed"></div>
+</main>
+
+<!-- Modal de autenticación -->
+<div id="authModal" class="modal">
+    <div class="modal-content">
+        <span class="close-auth">&times;</span>
+        <h2>Conéctate para dar like</h2>
+        <form id="authForm">
+            <input type="email" id="authEmail" placeholder="Correo electrónico" required>
+            <input type="password" id="authPassword" placeholder="Contraseña" required>
+            <button type="submit" class="btn-auth">Iniciar sesión / Registrarse</button>
+        </form>
+        <p class="auth-error" id="authError"></p>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="../js/reels.js"></script>
+</body>
+</html>
