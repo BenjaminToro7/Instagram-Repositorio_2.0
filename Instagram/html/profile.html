@@ -3,74 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil - Instagram</title>
+    <title>Perfil</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../css/profile.css">
 </head>
 <body>
-    <!-- BARRA LATERAL IZQUIERDA -->
+    <!-- SIDEBAR -->
     <nav class="sidebar">
-        <div class="logo"><i class="fa-brands fa-instagram"></i></div>
+        <div class="logo">
+            <i class="fa-brands fa-instagram"></i>
+        </div>
         <div class="menu">
             <a href="home.html"><i class="fa-solid fa-house"></i></a>
             <a href="search.html"><i class="fa-solid fa-magnifying-glass"></i></a>
             <a href="reels.html"><i class="fa-solid fa-clapperboard"></i></a>
-            <a href="messages.html"><i class="fa-solid fa-paper-plane"></i></a>
+            <a href="messages.html"><i class="fa-regular fa-paper-plane"></i></a>
             <a href="notifications.html"><i class="fa-regular fa-heart"></i></a>
             <a href="profile.html" class="activo"><i class="fa-regular fa-user"></i></a>
         </div>
-        <div class="menuInferior"><i class="fa-solid fa-bars"></i></div>
+        <div class="menuInferior">
+            <i class="fa-solid fa-bars"></i>
+        </div>
     </nav>
 
+    <!-- CONTENEDOR -->
     <main class="profile-container">
+        <!-- HEADER -->
         <div class="profile-header">
             <div class="avatar-section">
-                <img id="profileAvatar" src="https://via.placeholder.com/150" alt="Avatar">
-                <div class="edit-avatar-btn" id="editAvatarBtn" style="display: none;">
+                <img id="profileAvatar" src="">
+                <div class="edit-avatar-btn">
                     <i class="fa-solid fa-camera"></i>
                 </div>
             </div>
             <div class="info-section">
                 <div class="username-row">
                     <h2 id="profileUsername">cargando...</h2>
-                    <div id="actionButtons"></div>
+                    <i class="fa-regular fa-circle-check"></i>
+                </div>
+                <div class="name-row">
+                    <span id="profileName">cargando...</span>
                 </div>
                 <div class="stats-row">
                     <div><strong id="postsCount">0</strong> publicaciones</div>
                     <div><strong id="followersCount">0</strong> seguidores</div>
                     <div><strong id="followingCount">0</strong> seguidos</div>
                 </div>
-                <div class="bio">
-                    <div id="profileBio">cargando...</div>
-                    <div id="editBioBtn" style="display: none;">
-                        <i class="fa-regular fa-pen-to-square"></i> Editar perfil
-                    </div>
+                <div class="profile-buttons">
+                    <button class="edit-btn">Editar perfil</button>
+                    <button class="archive-btn">Ver archivo</button>
                 </div>
             </div>
         </div>
 
-        <div class="profile-posts">
-            <div class="posts-header">
-                <i class="fa-solid fa-table-cells-large"></i> PUBLICACIONES
+        <!-- HISTORIAS -->
+        <div class="stories-section">
+            <div class="story">
+                <div class="story-circle">
+                    <i class="fa-solid fa-plus"></i>
+                </div>
+                <span>Nuevo</span>
             </div>
-            <div class="posts-grid" id="postsGrid"></div>
+        </div>
+
+        <!-- TABS -->
+        <div class="tabs">
+            <div class="tab active"><i class="fa-solid fa-table-cells"></i></div>
+            <div class="tab"><i class="fa-regular fa-bookmark"></i></div>
+            <div class="tab"><i class="fa-regular fa-id-badge"></i></div>
+        </div>
+
+        <!-- GRID -->
+        <div class="posts-grid" id="postsGrid"></div>
+
+        <!-- PRIMEROS PASOS -->
+        <div class="welcome-box">
+            <h3>Primeros pasos</h3>
+            <div class="cards">
+                <div class="card">
+                    <i class="fa-regular fa-camera"></i>
+                    <h4>Comparte fotos</h4>
+                    <p>Cuando compartas fotos, aparecerán en tu perfil.</p>
+                    <button>Comparte tu primera foto</button>
+                </div>
+                <div class="card">
+                    <i class="fa-solid fa-phone"></i>
+                    <h4>Añade tu número</h4>
+                    <p>Añade tu número para recuperar la cuenta.</p>
+                    <button>Añadir número</button>
+                </div>
+                <div class="card">
+                    <i class="fa-regular fa-image"></i>
+                    <h4>Añadir foto</h4>
+                    <p>Añade una foto del perfil.</p>
+                    <button>Añadir foto</button>
+                </div>
+            </div>
         </div>
     </main>
-
-    <!-- MODAL EDITAR PERFIL -->
-    <div id="editModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h3>Editar perfil</h3>
-            <form id="editProfileForm">
-                <label>Foto (URL)</label>
-                <input type="text" id="editFoto" placeholder="URL de la foto">
-                <label>Biografía</label>
-                <textarea id="editBio" rows="3" placeholder="Escribe tu biografía"></textarea>
-                <button type="submit">Guardar cambios</button>
-            </form>
-        </div>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="../js/profile.js"></script>

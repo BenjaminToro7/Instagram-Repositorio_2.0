@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notificaciones - Instagram</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../css/notifications.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-    <!-- BARRA LATERAL IZQUIERDA -->
+    <!-- BARRA LATERAL IZQUIERDA (idéntica a las demás páginas) -->
     <nav class="sidebar">
-        <div class="logo"><i class="fa-brands fa-instagram"></i></div>
+        <div class="logo">
+            <i class="fa-brands fa-instagram"></i>
+        </div>
         <div class="menu">
             <a href="home.html"><i class="fa-solid fa-house"></i></a>
             <a href="search.html"><i class="fa-solid fa-magnifying-glass"></i></a>
@@ -19,14 +21,16 @@
             <a href="notifications.html" class="activo"><i class="fa-regular fa-heart"></i></a>
             <a href="profile.html"><i class="fa-regular fa-user"></i></a>
         </div>
-        <div class="menuInferior"><i class="fa-solid fa-bars"></i></div>
+        <div class="menuInferior">
+            <i class="fa-solid fa-bars"></i>
+        </div>
     </nav>
 
     <!-- CONTENIDO PRINCIPAL -->
     <main class="notificaciones-container">
         <h2 class="titulo">Notificaciones</h2>
         <div id="listaNotificaciones" class="lista-notificaciones">
-            <!-- Aquí se llenarán las notificaciones agrupadas -->
+            <!-- Se llena con JS -->
             <div class="empty-msg">Cargando notificaciones...</div>
         </div>
     </main>
