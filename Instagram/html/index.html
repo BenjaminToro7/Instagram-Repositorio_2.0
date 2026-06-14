@@ -1,0 +1,111 @@
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Instagram – Iniciar sesión</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/index.css" />
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- Panel izquierdo: mockup del teléfono (solo visible en desktop) -->
+    <div class="left-panel">
+      <div class="phone-mockup">
+        <div class="phone-screen">
+          <div class="phone-feed">
+            <div class="phone-header">
+              <span class="phone-logo">Instagram</span>
+              <div class="phone-icons"></div>
+            </div>
+            <div class="phone-stories">
+              <div class="story-bubble"></div>
+              <div class="story-bubble"></div>
+              <div class="story-bubble"></div>
+              <div class="story-bubble"></div>
+            </div>
+            <div class="phone-post">
+              <div class="post-header">
+                <div class="post-avatar"></div>
+                <span>searchmatchgroup</span>
+              </div>
+              <div class="post-image"></div>
+              <div class="post-actions"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel derecho: formulario de login -->
+    <div class="right-panel">
+
+      <div class="login-card">
+        <!-- Logo -->
+        <h1 class="logo">Instagram</h1> 
+
+        <!-- Formulario -->
+        <div class="form-group">
+          <input
+            type="text"
+            id="usuario"
+            class="input-field"
+            placeholder="Número de teléfono, usuario o correo"
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="password"
+            id="password"
+            class="input-field"
+            placeholder="Contraseña"
+          />
+        </div>
+
+        <button class="btn-primary" onclick="iniciarSesion()">
+          Iniciar sesión
+        </button>
+
+        <!-- Separador -->
+        <div class="separator">
+          <span class="line"></span>
+          <span class="or-text">O</span>
+          <span class="line"></span>
+        </div>
+
+        <!-- Facebook login -->
+        <button class="btn-facebook">
+          <span class="fb-icon">f</span>
+          Iniciar sesión con Facebook
+        </button>
+
+        <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+      </div>
+
+      <!-- Caja de registro -->
+      <div class="register-card">
+        <p>
+          ¿No tienes una cuenta?
+          <a href="registro.html" class="link-registro">Regístrate</a>
+        </p>
+      </div>
+
+      <!-- App store badges -->
+      <div class="app-badges">
+        <p>Descarga la aplicación.</p>
+        <div class="badges-row">
+          <button id="app-store" class="badge" href="https://apps.apple.com/app/instagram/id389801252" target="_blank">App Store</button>
+          <button id="google-play" class="badge" href="https://play.google.com/store/apps/details?id=com.instagram.android&hl=es_CL" target="_blank">Google Play</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
