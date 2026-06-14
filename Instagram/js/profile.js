@@ -1,371 +1,234 @@
-// =========================
-// 1. VARIABLES GLOBALES
-// =========================
+// ==================== SUPABASE ====================
+const SUPABASE_URL = 'https://kmtpdatdvkeocksijsya.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_qmrn1HJZgV5OnD1Bc7e1Ng_JClOATIt';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// Referencias al DOM - Perfil (usando querySelector)
-const profileAvatar = document.querySelector('#profileAvatar');
-const profileUsername = document.querySelector('#profileUsername');
-const profileRealName = document.querySelector('#profileRealName');
-const profileBio = document.querySelector('#profileBio');
-const profileLink = document.querySelector('#profileLink');
-const statPosts = document.querySelector('#statPosts');
-const statFollowers = document.querySelector('#statFollowers');
-const statFollowing = document.querySelector('#statFollowing');
-const navAvatar = document.querySelector('#navAvatar');
+// ==================== PEXELS (para posts de ejemplo) ====================
+const PEXELS_API_KEY = '3Ve4lhcRpHxtUtwD8U9lmKLQH6zLrTPortE2N7sUUVV2B5F5MNEnW7Ru';
 
-// Referencias al DOM - Contenedores
-const storiesContainer = document.querySelector('#storiesContainer');
-const galleryContainer = document.querySelector('#galleryContainer');
+// ==================== DOM ====================
+const avatarImg = document.getElementById('profileAvatar');
+const usernameH2 = document.getElementById('profileUsername');
+const bioDiv = document.getElementById('profileBio');
+const postsCountSpan = document.getElementById('postsCount');
+const followersCountSpan = document.getElementById('followersCount');
+const followingCountSpan = document.getElementById('followingCount');
+const actionButtonsDiv = document.getElementById('actionButtons');
+const editAvatarBtn = document.getElementById('editAvatarBtn');
+const editBioBtn = document.getElementById('editBioBtn');
+const postsGrid = document.getElementById('postsGrid');
 
-// Referencias al DOM - Botones
-const btnEditProfile = document.querySelector('#btnEditProfile');
-const btnShareProfile = document.querySelector('#btnShareProfile');
-const btnSwitchAccount = document.querySelector('#btnSwitchAccount');
+const editModal = document.getElementById('editModal');
+const closeModal = document.querySelector('.close-modal');
+const editForm = document.getElementById('editProfileForm');
+const editFotoInput = document.getElementById('editFoto');
+const editBioTextarea = document.getElementById('editBio');
 
-// Referencias al DOM - Modal de Historia
-const storyModal = document.querySelector('#storyModal');
-const closeStory = document.querySelector('#closeStory');
-const storyImage = document.querySelector('#storyImage');
-const storyName = document.querySelector('#storyName');
-const storyDescription = document.querySelector('#storyDescription');
+let currentUser = null;      // username del usuario logueado (localStorage)
+let profileUser = null;      // username cuyo perfil estamos viendo
+let isOwnProfile = false;
 
-// Referencias al DOM - Modal de Publicación
-const postModal = document.querySelector('#postModal');
-const closePost = document.querySelector('#closePost');
-const postImage = document.querySelector('#postImage');
-const postUsername = document.querySelector('#postUsername');
-const postUserAvatar = document.querySelector('#postUserAvatar');
-const postDescription = document.querySelector('#postDescription');
-const postLikes = document.querySelector('#postLikes');
-const postComments = document.querySelector('#postComments');
-const postShares = document.querySelector('#postShares');
-
-// Referencias al DOM - Modal de Editar Perfil
-const editModal = document.querySelector('#editModal');
-const closeEdit = document.querySelector('#closeEdit');
-const editForm = document.querySelector('#editForm');
-const editName = document.querySelector('#editName');
-const editBio = document.querySelector('#editBio');
-const editLink = document.querySelector('#editLink');
-const cancelEdit = document.querySelector('#cancelEdit');
-
-// Estado de la aplicación
-let currentUserId = 0;       // Índice del usuario activo en el array
-let currentPostIndex = 0;    // Índice de la publicación abierta
-let currentStoryIndex = 0;   // Índice de la historia abierta
-
-// =========================
-// 2. DATOS DE USUARIOS
-// =========================
-
-const users = [
-  {
-    id: 1,
-    username: 'maria_dev',
-    fullName: 'María García',
-    avatar: 'https://i.pravatar.cc/300?u=maria_dev',
-    bio: '✈️ Viajera | 📸 Fotógrafa | 🌍 Explorando el mundo\n📍 Basada en Madrid',
-    link: 'www.misviajes.com',
-    posts: 42,
-    followers: 12580,
-    following: 843,
-    stories: [
-      { name: 'Viajes', emoji: '✈️', color: '#FF6B6B', gradient: 'linear-gradient(135deg, #FF6B6B, #FFA07A)', description: 'Mis aventuras alrededor del mundo 🌎' },
-      { name: 'Comida', emoji: '🍕', color: '#FFD93D', gradient: 'linear-gradient(135deg, #FFD93D, #FF8C42)', description: 'Los mejores restaurantes que he visitado 🍝' },
-      { name: 'Arte', emoji: '🎨', color: '#6C5CE7', gradient: 'linear-gradient(135deg, #6C5CE7, #A29BFE)', description: 'Galerías y museos imperdibles 🖼️' },
-      { name: 'Playas', emoji: '🏖️', color: '#00CEC9', gradient: 'linear-gradient(135deg, #00CEC9, #81ECEC)', description: 'Paradises tropicales que debes conocer 🌴' }
-    ],
-    postsData: [
-      { image: 'https://picsum.photos/seed/maria1/400/400', likes: 1234, comments: 56, shares: 12, description: 'Atardecer en la playa 🌅' },
-      { image: 'https://picsum.photos/seed/maria2/400/400', likes: 2341, comments: 89, shares: 34, description: 'Cafecito de las mañanas ☕' },
-      { image: 'https://picsum.photos/seed/maria3/400/400', likes: 3456, comments: 102, shares: 45, description: 'Nueva aventura en la montaña 🏔️' },
-      { image: 'https://picsum.photos/seed/maria4/400/400', likes: 4567, comments: 134, shares: 67, description: 'City tour por el centro histórico 🏛️' },
-      { image: 'https://picsum.photos/seed/maria5/400/400', likes: 5678, comments: 210, shares: 89, description: 'Atardecer desde el rooftop 🌇' },
-      { image: 'https://picsum.photos/seed/maria6/400/400', likes: 6789, comments: 56, shares: 23, description: 'Explorando nuevos horizontes 🚀' },
-      { image: 'https://picsum.photos/seed/maria7/400/400', likes: 7890, comments: 178, shares: 91, description: 'Día de campo en la naturaleza 🌿' },
-      { image: 'https://picsum.photos/seed/maria8/400/400', likes: 8901, comments: 45, shares: 12, description: 'Arquitectura moderna por la ciudad 🏙️' },
-      { image: 'https://picsum.photos/seed/maria9/400/400', likes: 9012, comments: 67, shares: 34, description: 'Atardecer mágico en la costa 🌊' }
-    ]
-  },
-  {
-    id: 2,
-    username: 'carlos_tech',
-    fullName: 'Carlos Mendoza',
-    avatar: 'https://i.pravatar.cc/300?u=carlos_tech',
-    bio: '💻 Desarrollador web | 🚀 Tech enthusiast\n📍 Basado en México DF',
-    link: 'www.carlosmendoza.dev',
-    posts: 36,
-    followers: 8750,
-    following: 521,
-    stories: [
-      { name: 'Código', emoji: '💻', color: '#0984E3', gradient: 'linear-gradient(135deg, #0984E3, #74B9FF)', description: 'Mis proyectos de código abierto 🧑‍💻' },
-      { name: 'Gaming', emoji: '🎮', color: '#6C5CE7', gradient: 'linear-gradient(135deg, #6C5CE7, #FD79A8)', description: 'Gameplay y reseñas de videojuegos 🕹️' },
-      { name: 'Música', emoji: '🎵', color: '#FD79A8', gradient: 'linear-gradient(135deg, #FD79A8, #FDCB6E)', description: 'Playlists y conciertos 🎶' },
-      { name: 'Gadgets', emoji: '📱', color: '#00B894', gradient: 'linear-gradient(135deg, #00B894, #55EFC4)', description: 'Reviews de los últimos gadgets 📲' }
-    ],
-    postsData: [
-      { image: 'https://picsum.photos/seed/carlos1/400/400', likes: 892, comments: 34, shares: 8, description: 'Setup de trabajo minimalista 🖥️' },
-      { image: 'https://picsum.photos/seed/carlos2/400/400', likes: 1567, comments: 78, shares: 23, description: 'Nuevo teclado mecánico ⌨️' },
-      { image: 'https://picsum.photos/seed/carlos3/400/400', likes: 2345, comments: 91, shares: 45, description: 'Mi estación de trabajo actual 🎮' },
-      { image: 'https://picsum.photos/seed/carlos4/400/400', likes: 678, comments: 23, shares: 12, description: 'Café y código ☕' },
-      { image: 'https://picsum.photos/seed/carlos5/400/400', likes: 3456, comments: 123, shares: 67, description: 'Conferencia de tecnología 2026 🎤' },
-      { image: 'https://picsum.photos/seed/carlos6/400/400', likes: 1234, comments: 56, shares: 34, description: 'Mi nuevo monitor ultra wide 🖥️' },
-      { image: 'https://picsum.photos/seed/carlos7/400/400', likes: 2345, comments: 89, shares: 12, description: 'Hackathon ganado 🏆' },
-      { image: 'https://picsum.photos/seed/carlos8/400/400', likes: 4567, comments: 145, shares: 78, description: 'Meetup de desarrolladores 👨‍💻' },
-      { image: 'https://picsum.photos/seed/carlos9/400/400', likes: 789, comments: 34, shares: 9, description: 'Atardecer desde la oficina 🌆' }
-    ]
-  }
-];
-
-// =========================
-// 3. CARGA DEL PERFIL
-// =========================
-
-function loadProfile(userId) {
-  const user = users[userId];
-
-  // Actualizar datos del perfil
-  profileAvatar.src = user.avatar;
-  navAvatar.src = user.avatar;
-  profileUsername.textContent = user.username;
-  profileRealName.textContent = user.fullName;
-  profileBio.innerHTML = user.bio.replace(/\n/g, '<br>');
-  profileLink.textContent = user.link;
-  profileLink.href = 'https://' + user.link;
-  statPosts.textContent = user.posts;
-  statFollowers.textContent = formatNumber(user.followers);
-  statFollowing.textContent = user.following;
-
-  // Renderizar historias y publicaciones
-  renderStories(user.stories);
-  renderGallery(user.postsData);
-}
-
-// =========================
-// FUNCIÓN AUXILIAR
-// =========================
-
-function formatNumber(num) {
-  if (num >= 1000000) {
-    return (num / 1000000).toFixed(1).replace('.0', '') + 'M';
-  }
-  if (num >= 1000) {
-    return (num / 1000).toFixed(1).replace('.0', '') + 'K';
-  }
-  return num.toString();
-}
-
-// =========================
-// 4. APERTURA DE HISTORIAS
-// =========================
-
-function openStory(index) {
-  const user = users[currentUserId];
-  const story = user.stories[index];
-  currentStoryIndex = index;
-
-  // Mostrar la historia en el modal
-  storyImage.style.background = story.gradient;
-  storyImage.textContent = story.emoji;
-  storyName.textContent = story.name;
-  storyDescription.textContent = story.description;
-
-  storyModal.classList.add('modal-overlay--open');
-}
-
-function closeStoryModal() {
-  storyModal.classList.remove('modal-overlay--open');
-}
-
-// =========================
-// 5. APERTURA DE PUBLICACIONES
-// =========================
-
-function openPost(index) {
-  const user = users[currentUserId];
-  const post = user.postsData[index];
-  currentPostIndex = index;
-
-  // Limpiar contenido previo
-  postImage.innerHTML = '';
-
-  // Crear y añadir la imagen
-  const img = document.createElement('img');
-  img.src = post.image;
-  img.alt = 'Publicación';
-  img.loading = 'lazy';
-  postImage.appendChild(img);
-
-  // Rellenar datos de la publicación
-  postUsername.textContent = user.username;
-  postUserAvatar.src = user.avatar;
-  postDescription.textContent = post.description;
-  postLikes.textContent = formatNumber(post.likes);
-  postComments.textContent = formatNumber(post.comments);
-  postShares.textContent = formatNumber(post.shares);
-
-  postModal.classList.add('modal-overlay--open');
-}
-
-function closePostModal() {
-  postModal.classList.remove('modal-overlay--open');
-}
-
-// =========================
-// 6. EDICIÓN DE PERFIL
-// =========================
-
-function openEditModal() {
-  const user = users[currentUserId];
-
-  // Rellenar el formulario con los datos actuales
-  editName.value = user.fullName;
-  editBio.value = user.bio;
-  editLink.value = user.link;
-
-  editModal.classList.add('modal-overlay--open');
-}
-
-function closeEditModal() {
-  editModal.classList.remove('modal-overlay--open');
-}
-
-function saveProfile(event) {
-  event.preventDefault();
-
-  const user = users[currentUserId];
-
-  // Obtener valores del formulario
-  const newName = editName.value.trim();
-  const newBio = editBio.value.trim();
-  const newLink = editLink.value.trim();
-
-  // Actualizar los datos del usuario en memoria
-  if (newName) user.fullName = newName;
-  if (newBio) user.bio = newBio;
-  if (newLink) user.link = newLink;
-
-  // Reflejar los cambios en la pantalla
-  profileRealName.textContent = user.fullName;
-  profileBio.innerHTML = user.bio.replace(/\n/g, '<br>');
-  profileLink.textContent = user.link;
-
-  // Cerrar el modal
-  closeEditModal();
-}
-
-// =========================
-// 7. CAMBIO DE CUENTA
-// =========================
-
-function switchAccount() {
-  // Alternar entre el usuario 0 y 1
-  currentUserId = currentUserId === 0 ? 1 : 0;
-
-  // Recargar todo el perfil con el nuevo usuario
-  loadProfile(currentUserId);
-
-  // Cerrar cualquier modal abierto
-  closeStoryModal();
-  closePostModal();
-  closeEditModal();
-}
-
-// =========================
-// 8. RENDERIZADO DE HISTORIAS
-// =========================
-
-function renderStories(stories) {
-  storiesContainer.innerHTML = '';
-
-  stories.forEach((story, index) => {
-    const storyElement = document.createElement('div');
-    storyElement.className = 'story';
-
-    storyElement.innerHTML = `
-      <div class="story__ring" style="background: ${story.gradient}">
-        <div class="story__image" style="background-color: ${story.color}">
-          ${story.emoji}
-        </div>
-      </div>
-      <span class="story__name">${story.name}</span>
-    `;
-
-    storyElement.addEventListener('click', function () {
-      openStory(index);
-    });
-
-    storiesContainer.appendChild(storyElement);
-  });
-}
-
-// =========================
-// RENDERIZADO DE PUBLICACIONES
-// =========================
-
-function renderGallery(posts) {
-  galleryContainer.innerHTML = '';
-
-  posts.forEach((post, index) => {
-    const item = document.createElement('div');
-    item.className = 'gallery__item';
-
-    item.innerHTML = `
-      <img class="gallery__image" src="${post.image}" alt="Publicación" loading="lazy">
-      <div class="gallery__overlay">
-        <span class="gallery__overlay-stat">❤️ ${formatNumber(post.likes)}</span>
-        <span class="gallery__overlay-stat">💬 ${formatNumber(post.comments)}</span>
-      </div>
-    `;
-
-    item.addEventListener('click', function () {
-      openPost(index);
-    });
-
-    galleryContainer.appendChild(item);
-  });
-}
-
-// =========================
-// 9. EVENTOS GENERALES
-// =========================
-
-// Cerrar modales al hacer clic en la X
-closeStory.addEventListener('click', closeStoryModal);
-closePost.addEventListener('click', closePostModal);
-closeEdit.addEventListener('click', closeEditModal);
-cancelEdit.addEventListener('click', closeEditModal);
-
-// Cerrar modales al hacer clic fuera del contenido (usando querySelectorAll)
-document.querySelectorAll('.modal-overlay').forEach(function (modal) {
-  modal.addEventListener('click', function (event) {
-    if (event.target === modal) {
-      this.classList.remove('modal-overlay--open');
+// ==================== OBTENER USUARIO ACTUAL (localStorage) ====================
+function getCurrentUser() {
+    let user = localStorage.getItem("usuario");
+    if (!user) {
+        user = "juan";
+        localStorage.setItem("usuario", user);
     }
-  });
+    return user;
+}
+
+// ==================== OBTENER PERFIL DESDE SUPABASE (solo username, foto, estado) ====================
+async function fetchUserProfile(username) {
+    const { data, error } = await supabase
+        .from('usuarios')
+        .select('username, foto, estado')
+        .eq('username', username)
+        .single();
+    if (error) {
+        console.error("Error fetching user:", error);
+        return null;
+    }
+    return data;
+}
+
+// ==================== CONTADORES ====================
+async function fetchFollowersCount(username) {
+    const { count, error } = await supabase
+        .from('seguidores')
+        .select('*', { count: 'exact', head: true })
+        .eq('seguido', username)
+        .eq('estado', 'aprobado');
+    return count || 0;
+}
+
+async function fetchFollowingCount(username) {
+    const { count, error } = await supabase
+        .from('seguidores')
+        .select('*', { count: 'exact', head: true })
+        .eq('seguidor', username)
+        .eq('estado', 'aprobado');
+    return count || 0;
+}
+
+// ==================== VERIFICAR SEGUIMIENTO ====================
+async function isFollowing(seguidor, seguido) {
+    const { data, error } = await supabase
+        .from('seguidores')
+        .select('id')
+        .eq('seguidor', seguidor)
+        .eq('seguido', seguido)
+        .eq('estado', 'aprobado')
+        .single();
+    return !!data;
+}
+
+// ==================== SEGUIR / DEJAR DE SEGUIR ====================
+async function followUser(seguidor, seguido) {
+    const { error } = await supabase
+        .from('seguidores')
+        .insert({ seguidor, seguido, estado: 'aprobado' });
+    if (!error) {
+        followersCountSpan.innerText = parseInt(followersCountSpan.innerText) + 1;
+    }
+}
+
+async function unfollowUser(seguidor, seguido) {
+    const { error } = await supabase
+        .from('seguidores')
+        .delete()
+        .eq('seguidor', seguidor)
+        .eq('seguido', seguido);
+    if (!error) {
+        followersCountSpan.innerText = parseInt(followersCountSpan.innerText) - 1;
+    }
+}
+
+// ==================== CARGAR POSTS DE EJEMPLO (Pexels) ====================
+async function loadSamplePosts() {
+    postsGrid.innerHTML = '<div style="text-align:center;">Cargando publicaciones...</div>';
+    try {
+        const response = await fetch('https://api.pexels.com/v1/curated?per_page=9', {
+            headers: { 'Authorization': PEXELS_API_KEY }
+        });
+        const data = await response.json();
+        const posts = data.photos;
+        postsGrid.innerHTML = '';
+        posts.forEach(photo => {
+            const div = document.createElement('div');
+            div.className = 'post-item';
+            div.innerHTML = `<img src="${photo.src.small}" alt="post">`;
+            div.addEventListener('click', () => {
+                alert('Aquí podrías abrir el detalle de la publicación');
+            });
+            postsGrid.appendChild(div);
+        });
+        postsCountSpan.innerText = posts.length;
+    } catch (error) {
+        console.error(error);
+        postsGrid.innerHTML = '<div style="text-align:center;">Error al cargar publicaciones</div>';
+    }
+}
+
+// ==================== RENDERIZAR PERFIL ====================
+async function renderProfile() {
+    if (!profileUser) return;
+    const userData = await fetchUserProfile(profileUser);
+    if (!userData) {
+        usernameH2.innerText = 'Usuario no encontrado';
+        bioDiv.innerText = '';
+        avatarImg.src = 'https://via.placeholder.com/150';
+        return;
+    }
+    usernameH2.innerText = userData.username;
+    avatarImg.src = userData.foto || 'https://via.placeholder.com/150';
+    bioDiv.innerText = userData.estado || 'Sin biografía';
+
+    // Contadores
+    const followers = await fetchFollowersCount(profileUser);
+    const following = await fetchFollowingCount(profileUser);
+    followersCountSpan.innerText = followers;
+    followingCountSpan.innerText = following;
+
+    // Botones de acción
+    actionButtonsDiv.innerHTML = '';
+    if (isOwnProfile) {
+        editAvatarBtn.style.display = 'flex';
+        editBioBtn.style.display = 'inline-block';
+        const editProfileBtn = document.createElement('button');
+        editProfileBtn.className = 'edit-btn';
+        editProfileBtn.innerText = 'Editar perfil';
+        editProfileBtn.addEventListener('click', () => openEditModal(userData));
+        actionButtonsDiv.appendChild(editProfileBtn);
+    } else {
+        editAvatarBtn.style.display = 'none';
+        editBioBtn.style.display = 'none';
+        const sigue = await isFollowing(currentUser, profileUser);
+        const followBtn = document.createElement('button');
+        followBtn.className = `follow-btn ${sigue ? 'following' : ''}`;
+        followBtn.innerText = sigue ? 'Siguiendo' : 'Seguir';
+        followBtn.addEventListener('click', async () => {
+            if (sigue) {
+                await unfollowUser(currentUser, profileUser);
+                followBtn.innerText = 'Seguir';
+                followBtn.classList.remove('following');
+            } else {
+                await followUser(currentUser, profileUser);
+                followBtn.innerText = 'Siguiendo';
+                followBtn.classList.add('following');
+            }
+        });
+        actionButtonsDiv.appendChild(followBtn);
+        // Botón mensaje
+        const msgBtn = document.createElement('button');
+        msgBtn.className = 'message-btn';
+        msgBtn.innerText = 'Mensaje';
+        msgBtn.addEventListener('click', () => {
+            window.location.href = `messages.html?user=${profileUser}`;
+        });
+        actionButtonsDiv.appendChild(msgBtn);
+    }
+}
+
+// ==================== EDITAR PERFIL (MODAL) ====================
+function openEditModal(userData) {
+    editFotoInput.value = userData.foto || '';
+    editBioTextarea.value = userData.estado || '';
+    editModal.style.display = 'flex';
+}
+editForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const newFoto = editFotoInput.value.trim();
+    const newBio = editBioTextarea.value.trim();
+    const { error } = await supabase
+        .from('usuarios')
+        .update({ foto: newFoto || null, estado: newBio || null })
+        .eq('username', currentUser);
+    if (!error) {
+        avatarImg.src = newFoto || 'https://via.placeholder.com/150';
+        bioDiv.innerText = newBio || 'Sin biografía';
+        editModal.style.display = 'none';
+    } else {
+        alert('Error al guardar: ' + error.message);
+    }
 });
+closeModal.addEventListener('click', () => editModal.style.display = 'none');
+window.addEventListener('click', (e) => { if (e.target === editModal) editModal.style.display = 'none'; });
 
-// Botones principales
-btnEditProfile.addEventListener('click', openEditModal);
-btnSwitchAccount.addEventListener('click', switchAccount);
-btnShareProfile.addEventListener('click', function () {
-  alert('¡Enlace del perfil copiado al portapapeles! 📋');
-});
+// ==================== OBTENER USUARIO DE LA URL ====================
+function getProfileUserFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const userParam = params.get('user');
+    if (userParam) return userParam;
+    return getCurrentUser();  // si no hay parámetro, ver el propio perfil
+}
 
-// Formulario de edición
-editForm.addEventListener('submit', saveProfile);
-
-// Cerrar con tecla Escape (usando querySelectorAll)
-document.addEventListener('keydown', function (event) {
-  if (event.key === 'Escape') {
-    document.querySelectorAll('.modal-overlay--open').forEach(function (modal) {
-      modal.classList.remove('modal-overlay--open');
-    });
-  }
-});
-
-// =========================
-// INICIALIZACIÓN
-// =========================
-
-loadProfile(currentUserId);
+// ==================== INICIALIZAR ====================
+async function init() {
+    currentUser = getCurrentUser();
+    profileUser = getProfileUserFromUrl();
+    isOwnProfile = (profileUser === currentUser);
+    await renderProfile();
+    await loadSamplePosts();
+}
+init();
