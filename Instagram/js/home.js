@@ -1,7 +1,7 @@
 // ==================== SUPABASE ====================
 const SUPABASE_URL = 'https://kmtpdatdvkeocksijsya.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_qmrn1HJZgV5OnD1Bc7e1Ng_JClOATIt';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ==================== PEXELS ====================
 const PEXELS_API_KEY = '3Ve4lhcRpHxtUtwD8U9lmKLQH6zLrTPortE2N7sUUVV2B5F5MNEnW7Ru';
@@ -22,32 +22,28 @@ function getUsuarioActual() {
     return user;
 }
 
-// ==================== ASEGURAR USUARIO ACTUAL EN SUPABASE ====================
+// ==================== ASEGURAR USUARIO EN SUPABASE ====================
 async function asegurarUsuarioActual() {
     const username = getUsuarioActual();
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
         .from('usuarios')
         .select('username')
         .eq('username', username)
-        .single();
+        .maybeSingle();
     if (!data) {
-        await supabase
+        const email = `${username}@example.com`;
+        const fotoDefault = `https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 70)}`;
+        await supabaseClient
             .from('usuarios')
-            .insert([{
-                username: username,
-                email: `${username}@example.com`,
-                foto: 'https://i.pravatar.cc/150?img=10',
-                estado: 'Hola, uso Instagram'
-            }]);
+            .insert([{ username, email, foto: fotoDefault, estado: 'Hola, uso Instagram' }]);
     }
     return username;
 }
 
-// ==================== CARGAR HISTORIAS (SOLO DE USUARIOS QUE SIGO) ====================
+// ==================== CARGAR HISTORIAS (solo seguidos) ====================
 async function cargarHistorias() {
     const currentUser = getUsuarioActual();
-    // Obtener lista de usuarios que sigo
-    const { data: seguidos, error } = await supabase
+    const { data: seguidos, error } = await supabaseClient
         .from('seguidores')
         .select('seguido')
         .eq('seguidor', currentUser)
@@ -59,8 +55,7 @@ async function cargarHistorias() {
     }
 
     const seguidosUsernames = seguidos.map(s => s.seguido);
-    // Obtener datos de esos usuarios
-    const { data: usuarios, error: userError } = await supabase
+    const { data: usuarios, error: userError } = await supabaseClient
         .from('usuarios')
         .select('username, foto')
         .in('username', seguidosUsernames)
@@ -88,35 +83,35 @@ async function cargarHistorias() {
     });
 }
 
-// ==================== OBTENER FOTO DE PERFIL ====================
+// ==================== OBTENER FOTO PERFIL ====================
 async function getFotoPerfil(username) {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
         .from('usuarios')
         .select('foto')
         .eq('username', username)
-        .single();
+        .maybeSingle();
     if (error || !data) {
         return `https://ui-avatars.com/api/?name=${username.charAt(0)}&background=0095f6&color=fff&size=42`;
     }
     return data.foto || `https://ui-avatars.com/api/?name=${username.charAt(0)}&background=0095f6&color=fff&size=42`;
 }
 
-// ==================== SEGUIMIENTO (con actualización de historias) ====================
+// ==================== SEGUIMIENTO ====================
 async function isFollowing(seguidor, seguido) {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
         .from('seguidores')
         .select('id')
         .eq('seguidor', seguidor)
         .eq('seguido', seguido)
         .eq('estado', 'aprobado')
-        .single();
+        .maybeSingle();
     return !!data;
 }
 
 async function toggleFollow(seguidor, seguido, buttonElement) {
     const sigue = await isFollowing(seguidor, seguido);
     if (sigue) {
-        await supabase
+        await supabaseClient
             .from('seguidores')
             .delete()
             .eq('seguidor', seguidor)
@@ -124,19 +119,18 @@ async function toggleFollow(seguidor, seguido, buttonElement) {
         buttonElement.textContent = 'Seguir';
         buttonElement.classList.remove('following');
     } else {
-        await supabase
+        await supabaseClient
             .from('seguidores')
             .insert({ seguidor, seguido, estado: 'aprobado' });
         buttonElement.textContent = 'Siguiendo';
         buttonElement.classList.add('following');
     }
-    // Recargar historias porque cambió la lista de seguidos
-    await cargarHistorias();
+    await cargarHistorias(); // recargar historias al seguir/dejar de seguir
 }
 
 // ==================== LIKES ====================
 async function getLikesCount(postId) {
-    const { count, error } = await supabase
+    const { count, error } = await supabaseClient
         .from('likes_publicaciones')
         .select('*', { count: 'exact', head: true })
         .eq('post_id', postId);
@@ -144,23 +138,23 @@ async function getLikesCount(postId) {
 }
 
 async function userLikedPost(postId, usuario) {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
         .from('likes_publicaciones')
         .select('id')
         .eq('post_id', postId)
         .eq('usuario', usuario)
-        .single();
+        .maybeSingle();
     return !!data;
 }
 
 async function likePost(postId, autor, usuario) {
-    await supabase
+    await supabaseClient
         .from('likes_publicaciones')
         .insert({ post_id: postId, usuario, autor_post: autor });
 }
 
 async function unlikePost(postId, usuario) {
-    await supabase
+    await supabaseClient
         .from('likes_publicaciones')
         .delete()
         .eq('post_id', postId)
@@ -214,12 +208,11 @@ async function renderFeed(posts) {
         const fotoAutor = await getFotoPerfil(post.usuario);
         const likesCount = await getLikesCount(postId);
         const userLiked = await userLikedPost(postId, currentUser);
-        // Verificar si el autor existe en Supabase (para mostrar botón seguir)
-        const { data: autorExiste } = await supabase
+        const { data: autorExiste } = await supabaseClient
             .from('usuarios')
             .select('username')
             .eq('username', post.usuario)
-            .single();
+            .maybeSingle();
         const mostrarBotonSeguir = !!autorExiste && post.usuario !== currentUser;
         const sigue = mostrarBotonSeguir ? await isFollowing(currentUser, post.usuario) : false;
 

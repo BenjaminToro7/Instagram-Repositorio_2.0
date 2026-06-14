@@ -1,228 +1,168 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
 }
-
-body{
-    font-family: Arial, sans-serif;
-    background-color: #fafafa;
+body {
+    background: #fafafa;
 }
-
-.page-wrapper{
+.page-wrapper {
     display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
-    gap: 50px;
+    max-width: 1000px;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
     padding: 20px;
 }
-
-/* ===== PANEL IZQUIERDO ===== */
-
-.phone-mockup{
-    width: 280px;
-    height: 550px;
-    background-color: white;
-    border: 10px solid black;
-    border-radius: 30px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+/* PANEL IZQUIERDO (mockup de teléfono) */
+.left-panel {
+    display: none;
 }
-
-.phone-screen{
-    width: 100%;
-    height: 100%;
-    background-color: white;
+@media (min-width: 800px) {
+    .left-panel {
+        display: block;
+        width: 380px;
+    }
+    .phone-mockup {
+        background: #000;
+        border-radius: 40px;
+        padding: 15px 8px;
+        box-shadow: 0 0 0 8px #1e1e1e, 0 0 0 12px #2c2c2c, 0 20px 30px rgba(0,0,0,0.3);
+    }
+    .phone-screen {
+        background: #fff;
+        border-radius: 30px;
+        overflow-y: auto;
+        height: 580px;
+        width: 100%;
+    }
+    .phone-feed {
+        padding: 10px;
+    }
+    .phone-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 10px;
+        border-bottom: 1px solid #dbdbdb;
+    }
+    .phone-logo {
+        font-family: 'Grand Hotel', cursive;
+        font-size: 22px;
+    }
+    .phone-stories {
+        display: flex;
+        gap: 12px;
+        padding: 12px 10px;
+    }
+    .story-bubble {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(45deg, #f09433, #d62976);
+        border-radius: 50%;
+    }
+    .phone-post .post-image {
+        background: #e0e0e0;
+        height: 250px;
+        border-radius: 8px;
+        margin-top: 10px;
+    }
 }
-
-.phone-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    border-bottom: 1px solid #ddd;
+/* PANEL DERECHO (formulario) */
+.right-panel {
+    flex: 1;
+    max-width: 350px;
 }
-
-.phone-logo{
-    font-size: 24px;
-    font-family: "Grand Hotel", cursive;
-}
-
-.phone-stories{
-    display: flex;
-    gap: 10px;
-    padding: 15px;
-}
-
-.story-bubble{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af);
-}
-
-.phone-post{
-    padding: 10px;
-}
-
-.post-header{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-.post-avatar{
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background-color: #ccc;
-}
-
-.post-image{
-    width: 100%;
-    height: 250px;
-    background-color: #ddd;
-    border-radius: 10px;
-}
-
-.post-actions{
-    margin-top: 10px;
-    font-size: 20px;
-}
-
-/* ===== PANEL DERECHO ===== */
-
-.right-panel{
-    width: 350px;
-}
-
-.login-card,
-.register-card{
-    background-color: white;
+.login-card {
+    background: white;
     border: 1px solid #dbdbdb;
-    padding: 30px;
-    margin-bottom: 10px;
+    border-radius: 8px;
+    padding: 40px 30px;
     text-align: center;
+    margin-bottom: 15px;
 }
-
-.logo{
-    font-family: "Grand Hotel", cursive;
-    font-size: 50px;
+.logo {
+    font-family: 'Grand Hotel', cursive;
+    font-size: 48px;
     margin-bottom: 30px;
 }
-
-.form-group{
-    margin-bottom: 10px;
+.form-group {
+    margin-bottom: 12px;
 }
-
-.input-field{
+.input-field {
     width: 100%;
-    padding: 12px;
+    padding: 10px;
+    background: #fafafa;
     border: 1px solid #dbdbdb;
-    border-radius: 5px;
-    background-color: #fafafa;
+    border-radius: 6px;
+    font-size: 14px;
 }
-
-.input-field:focus{
-    outline: none;
-    border-color: #0095f6;
-}
-
-.btn-primary{
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    background-color: #0095f6;
+.btn-primary {
+    background: #0095f6;
     color: white;
     font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    width: 100%;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 8px;
 }
-
-.btn-primary:hover{
-    background-color: #1877f2;
-}
-
-.separator{
+.separator {
     display: flex;
     align-items: center;
     margin: 20px 0;
 }
-
-.line{
+.line {
     flex: 1;
     height: 1px;
-    background-color: #ccc;
+    background: #dbdbdb;
 }
-
-.or-text{
-    margin: 0 10px;
-    color: #777;
-    font-size: 14px;
-}
-
-.btn-facebook{
-    background: none;
-    border: none;
-    color: #385185;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.fb-icon{
-    margin-right: 5px;
-}
-
-.forgot-password{
-    display: block;
-    margin-top: 15px;
-    text-decoration: none;
-    color: #00376b;
+.or-text {
+    margin: 0 18px;
+    color: #8e8e8e;
     font-size: 13px;
 }
-
-.link-registro{
+.forgot-password {
+    font-size: 12px;
     text-decoration: none;
-    color: #0095f6;
-    font-weight: bold;
+    color: #00376b;
 }
-
-.app-badges{
+.app-badges {
     text-align: center;
 }
-
-.badges-row{
+.badges-row {
     display: flex;
-    justify-content: center;
     gap: 10px;
-    margin-top: 15px;
+    justify-content: center;
+    margin-top: 12px;
 }
-
-.badge{
-    background-color: black;
+.badge {
+    background: #000;
     color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    border: none;
     cursor: pointer;
 }
-
-/* ===== RESPONSIVE ===== */
-
-@media (max-width: 768px){
-
-    .left-panel{
-        display: none;
-    }
-
-    .page-wrapper{
-        flex-direction: column;
-    }
-
-    .right-panel{
-        width: 100%;
-        max-width: 350px;
-    }
+.error-msg {
+    color: #ed4956;
+    font-size: 13px;
+    margin-top: 10px;
+}
+/* Mostrar/ocultar contraseña */
+.password-wrapper {
+    position: relative;
+}
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #8e8e8e;
+    font-size: 18px;
 }
