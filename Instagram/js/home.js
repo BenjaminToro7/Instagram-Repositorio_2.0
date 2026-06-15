@@ -43,7 +43,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 3. Doble click en imagen → like + corazón blanco mediano
+  // 3. Comentarios → Publicar agrega comentario
+  document.querySelectorAll('.post-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const post = btn.closest('.post');
+      const input = post?.querySelector('.comment-input');
+      const text = input?.value.trim();
+      if (!text) return;
+      const comment = document.createElement('div');
+      comment.className = 'post-comment';
+      comment.innerHTML = `<span class="post-username">${localStorage.getItem('usuario') || 'usuario'}</span> ${text}`;
+      const container = post.querySelector('.post-comments');
+      if (container) container.appendChild(comment);
+      input.value = '';
+    });
+  });
+
+  // 4. Doble click en imagen → like + corazón blanco mediano
   document.querySelectorAll('.post-image').forEach(img => {
     img.addEventListener('dblclick', (e) => {
       e.preventDefault();
