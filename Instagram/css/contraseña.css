@@ -1,0 +1,128 @@
+/* Reinicio */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Página */
+body{
+    font-family: Arial, sans-serif;
+    background-color: #fafafa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Contenedor */
+.container{
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+/* Tarjeta principal */
+.card{
+    background-color: white;
+    border: 1px solid #dbdbdb;
+    padding: 40px 30px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+/* Icono */
+.icon{
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+/* Logo */
+.logo{
+    font-size: 45px;
+    margin-bottom: 20px;
+    font-family: 'Grand Hotel', cursive;
+}
+
+/* Título */
+.card h2{
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #262626;
+}
+
+/* Texto */
+.card p{
+    color: #737373;
+    font-size: 14px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+/* Input */
+input{
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #dbdbdb;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Botón */
+button{
+    width: 100%;
+    padding: 12px;
+    background-color: #0095f6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+button:hover{
+    background-color: #0077cc;
+}
+
+/* Línea */
+hr{
+    margin: 20px 0;
+    border: none;
+    border-top: 1px solid #dbdbdb;
+}
+
+/* Enlaces */
+.register-link,
+.back-login a{
+    text-decoration: none;
+    color: #0095f6;
+    font-weight: bold;
+}
+
+/* Caja inferior */
+.back-login{
+    margin-top: 10px;
+    background-color: white;
+    border: 1px solid #dbdbdb;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+/* Responsive */
+@media(max-width: 480px){
+
+    .container{
+        padding: 10px;
+    }
+
+    .card{
+        padding: 30px 20px;
+    }
+
+    .logo{
+        font-size: 40px;
+    }
+}
