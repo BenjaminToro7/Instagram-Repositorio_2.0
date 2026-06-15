@@ -377,7 +377,14 @@ function asignarEventosFeed() {
   document.querySelectorAll('.post-image').forEach(imgDiv => {
     imgDiv.addEventListener('dblclick', async (e) => {
       e.stopPropagation();
-      const likeBtn = imgDiv.closest('.post')?.querySelector('.like-btn');
+      const post = imgDiv.closest('.post');
+      const overlay = post?.querySelector('.post-heart-overlay');
+      if (overlay) {
+        overlay.classList.remove('show');
+        overlay.classList.add('show');
+        setTimeout(() => overlay.classList.remove('show'), 1000);
+      }
+      const likeBtn = post?.querySelector('.like-btn');
       if (likeBtn && !likeBtn.querySelector('i').classList.contains('fa-solid')) likeBtn.click();
     });
   });
