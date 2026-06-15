@@ -1,4 +1,4 @@
-/* Reinicio básico */
+/* Reinicio */
 *{
     margin: 0;
     padding: 0;
@@ -17,77 +17,217 @@ body{
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    gap: 40px;
+    gap: 50px;
+    padding: 20px;
 }
 
-/* Imagen del teléfono */
+/* Teléfono */
 .phone-mockup{
     width: 280px;
+    height: 550px;
+    background-color: white;
+    border: 8px solid #222;
+    border-radius: 30px;
+    overflow: hidden;
 }
 
-.phone-mockup img{
+/* Encabezado */
+.phone-header{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.phone-logo{
+    font-family: 'Grand Hotel', cursive;
+    font-size: 28px;
+}
+
+/* Stories */
+.phone-stories{
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+}
+
+.story-bubble{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(pink, orange);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.story-avatar{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: lightgray;
+    border: 2px solid white;
+}
+
+/* Colores */
+.a1{background:#ff6b6b;}
+.a2{background:#54a0ff;}
+.a3{background:#f368e0;}
+.a4{background:#1dd1a1;}
+
+/* Publicación */
+.phone-post{
+    padding: 15px;
+}
+
+.post-header{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.post-avatar{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: purple;
+}
+
+.post-user{
+    font-weight: bold;
+}
+
+.post-image{
     width: 100%;
+    height: 220px;
+    background: linear-gradient(#667eea,#764ba2);
+    border-radius: 5px;
 }
 
-/* Formulario */
-.login-card{
+.post-actions{
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Panel derecho */
+.right-panel{
     width: 350px;
-    background: white;
-    border: 1px solid #dbdbdb;
-    padding: 30px;
-    text-align: center;
 }
 
-/* Logo */
+/* Tarjetas */
+.login-card,
+.register-card{
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 30px;
+    margin-bottom: 10px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+/* Logo principal */
 .logo{
-    font-size: 40px;
+    font-family: 'Grand Hotel', cursive;
+    font-size: 50px;
     margin-bottom: 20px;
+}
+
+/* Botones */
+.btn-social,
+.btn-primary{
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.btn-facebook{
+    background-color: #1877f2;
+    color: white;
+}
+
+.btn-google{
+    background-color: white;
+    border: 1px solid #ddd;
+}
+
+.btn-primary{
+    background-color: #0095f6;
+    color: white;
+}
+
+/* Separador */
+.separator{
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+}
+
+.line{
+    flex: 1;
+    height: 1px;
+    background-color: #ddd;
+}
+
+.or-text{
+    margin: 0 10px;
+    color: gray;
 }
 
 /* Inputs */
 .input-field{
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin-bottom: 10px;
-    border: 1px solid #dbdbdb;
-    border-radius: 4px;
-}
-
-/* Botón */
-.btn-primary{
-    width: 100%;
-    padding: 10px;
-    background-color: #0095f6;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 /* Link */
-.forgot-password{
-    display: block;
-    margin-top: 15px;
+.forgot-password,
+.link-login{
+    color: #0095f6;
     text-decoration: none;
-    color: #00376b;
 }
 
-/* Registro */
-.register-card{
-    margin-top: 10px;
-    background: white;
-    border: 1px solid #dbdbdb;
-    padding: 20px;
+/* Apps */
+.app-badges{
     text-align: center;
 }
 
+.badges-row{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.badge{
+    padding: 10px 15px;
+    border: none;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 /* Responsive */
-@media(max-width:768px){
+@media(max-width: 768px){
+
     .page-wrapper{
         flex-direction: column;
     }
 
-    .phone-mockup{
+    .left-panel{
         display: none;
+    }
+
+    .right-panel{
+        width: 100%;
+        max-width: 350px;
     }
 }
