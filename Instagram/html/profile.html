@@ -18,13 +18,10 @@
         <div class="nav-items">
             <a href="home.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
             <div class="nav-item" id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i><span>Buscar</span></div>
-            <a href="search.html" class="nav-item"><i class="fa-regular fa-compass"></i><span>Explorar</span></a>
             <a href="reels.html" class="nav-item"><i class="fa-solid fa-clapperboard"></i><span>Reels</span></a>
             <a href="messages.html" class="nav-item"><i class="fa-regular fa-paper-plane"></i><span>Mensajes</span></a>
             <a href="notifications.html" class="nav-item"><i class="fa-regular fa-heart"></i><span>Notificaciones</span></a>
-            <div class="nav-item" id="createBtn"><i class="fa-regular fa-square-plus"></i><span>Crear</span></div>
             <a href="profile.html" class="nav-item active" id="profileNavItem"><img class="avatar-xs" id="navAvatar" src="" alt=""><span>Perfil</span></a>
-            <div class="nav-item more-active" id="moreBtn"><i class="fa-solid fa-bars"></i><span>Más</span></div>
         </div>
     </nav>
 
@@ -64,21 +61,6 @@
             <div class="posts-grid" id="postsGrid"></div>
         </div>
     </main>
-
-    <!-- Create Post Modal -->
-    <div class="modal-overlay" id="createModal">
-        <div class="modal-box" style="width:600px;padding:20px;max-height:90vh;display:flex;flex-direction:column;">
-            <button class="modal-close" id="closeCreateBtn">&times;</button>
-            <h2 style="text-align:center;margin-bottom:16px;font-size:16px;">Crear nueva publicación</h2>
-            <div style="flex:1;display:flex;flex-direction:column;gap:12px;">
-                <input type="file" id="postFileInput" accept="image/*,video/*" multiple style="color:#fff;font-size:14px;">
-                <textarea id="postCaption" placeholder="Escribe un pie de foto..." style="background:#121212;border:1px solid #262626;border-radius:8px;padding:12px;color:#fff;font-size:14px;resize:none;height:80px;"></textarea>
-                <input type="text" id="postLocation" placeholder="Añadir ubicación" style="background:#121212;border:1px solid #262626;border-radius:8px;padding:12px;color:#fff;font-size:14px;">
-                <div id="postPreview" style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;max-height:200px;overflow-y:auto;"></div>
-                <button id="submitPostBtn" style="background:#0095f6;color:#fff;border:none;border-radius:8px;padding:10px;font-weight:600;cursor:pointer;">Compartir</button>
-            </div>
-        </div>
-    </div>
 
     <!-- Post Detail Modal -->
     <div class="modal-overlay" id="postModal">
